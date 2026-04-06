@@ -111,8 +111,8 @@ app.use((req, res) => {
 // Start server
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, async () => {
-  console.log(\`RxMax API running on port \${PORT}\`);
-  console.log(\`Environment: \${process.env.NODE_ENV || 'development'}\`);
+  console.log(`RxMax API running on port ${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 
   // Run database migrations on startup
   try {
