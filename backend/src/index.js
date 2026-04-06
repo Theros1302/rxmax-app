@@ -15,13 +15,13 @@ const adminRoutes = require('./routes/admin');
 // Services
 const { initCronJobs } = require('./services/cronJobs');
 const { readPrescriptionFromBase64 } = require('./services/prescriptionAI');
+const { runMigrations } = require('./config/migrate');
 
 const app = express();
 
 // Middleware
 app.use(cors({
   origin: function(origin, callback) {
-    // Allow all origins for now (restrict in production)
     callback(null, true);
   },
   credentials: true
@@ -44,8 +44,6 @@ app.post('/api/prescriptions/read-ai', async (req, res) => {
     if (!image_data) {
       return res.status(400).json({ error: 'No image data provided' });
     }
-
-    // Strip data URL prefix
     let base64Clean = image_data;
     let mimeType = 'image/jpeg';
     if (image_data.startsWith('data:')) {
@@ -55,7 +53,6 @@ app.post('/api/prescriptions/read-ai', async (req, res) => {
         base64Clean = match[2];
       }
     }
-
     const result = await readPrescriptionFromBase64(base64Clean, mimeType);
     res.json({
       success: true,
@@ -98,17 +95,11 @@ app.use('/api/admin', adminRoutes);
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Error:', err);
-
   if (err.name === 'MulterError') {
-    if (err.code === 'FILE_TOO_LARGE') {
-      return res.status(413).json({ error: 'File too large' });
-    }
-    if (err.code === 'LIMIT_FILE_COUNT') {
-      return res.status(400).json({ error: 'Too many files' });
-    }
+    if (err.code === 'FILE_TOO_LARGE') return res.status(413).json({ error: 'File too large' });
+    if (err.code === 'LIMIT_FILE_COUNT') return res.status(400).json({ error: 'Too many files' });
     return res.status(400).json({ error: err.message });
   }
-
   res.status(500).json({ error: 'Internal server error' });
 });
 
@@ -119,11 +110,18 @@ app.use((req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, () => {
-  console.log(`RxMax API running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+const server = app.listen(PORT, async () => {
+  console.log(\`RxMax API running on port \${PORT}\`);
+  console.log(\`Environment: \${process.env.NODE_ENV || 'development'}\`);
 
-  // Initialize cron jobs if in production
+  // Run database migrations on startup
+  try {
+    await runMigrations();
+    console.log('Database ready!');
+  } catch (err) {
+    console.error('Migration warning:', err.message);
+  }
+
   if (process.env.NODE_ENV === 'production') {
     initCronJobs();
   }
