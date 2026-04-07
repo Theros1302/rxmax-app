@@ -15,24 +15,50 @@ let model = null;
 if (process.env.GEMINI_API_KEY) {
   genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
   model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-  console.log('✅ AI Prescription Reading: Gemini API initialized');
+  console.log('â AI Prescription Reading: Gemini API initialized');
 } else {
-  console.log('⚠️  AI Prescription Reading: No GEMINI_API_KEY set, running in demo mode');
+  console.log('â ï¸  AI Prescription Reading: No GEMINI_API_KEY set, running in demo mode');
 }
 
 /**
  * The prompt that tells Gemini exactly what to extract from the prescription image.
  * Optimized for Indian pharmacy prescriptions.
  */
-const EXTRACTION_PROMPT = `You are an expert pharmacist AI assistant in India. Analyze this prescription image carefully and extract ALL medicines mentioned.
+const EXTRACTION_PROMPT = `You are a SENIOR PHARMACIST in India with 20+ years of experience reading handwritten prescriptions from Indian doctors. Your job is to extract the EXACT BRAND NAMES of medicines from this prescription image.
+
+CRITICAL INSTRUCTION â BRAND NAME ACCURACY:
+Indian doctors ALWAYS write BRAND NAMES (not generic/molecule names). You MUST transcribe the EXACT brand name as written on the prescription. DO NOT convert brand names to generic names. DO NOT guess a different brand.
+
+Common Indian brand name examples to help you recognize handwriting patterns:
+- Dolo 650 (NOT "Paracetamol 650mg")
+- Augmentin 625 Duo (NOT "Amoxicillin+Clavulanic Acid")
+- Crocin Advance (NOT "Paracetamol")
+- Azithral 500 (NOT "Azithromycin 500mg")
+- Pan-D / Pan 40 (NOT "Pantoprazole")
+- Shelcal 500 (NOT "Calcium Carbonate")
+- Ecosprin 75 (NOT "Aspirin 75mg")
+- Glycomet GP 1 (NOT "Metformin+Glimepiride")
+- Telma 40 (NOT "Telmisartan 40mg")
+- Monocef 200 (NOT "Cefpodoxime")
+- Combiflam (NOT "Ibuprofen+Paracetamol")
+- Zifi 200 (NOT "Cefixime 200mg")
+- Rantac 150 (NOT "Ranitidine")
+- Montair LC (NOT "Montelukast+Levocetirizine")
+- Moxikind CV 625 (NOT "Amoxicillin+Clavulanic Acid")
+- Chymoral Forte (NOT "Trypsin+Chymotrypsin")
+- Zerodol SP (NOT "Aceclofenac+Serratiopeptidase")
+- Becosules Z (NOT "Multivitamin")
+- Ciplox 500 (NOT "Ciprofloxacin")
+- Taxim-O 200 (NOT "Cefixime")
 
 For EACH medicine found, provide:
-1. medicine_name: The BRAND NAME exactly as written on the prescription (e.g., "Zocon 200", "Dolo 650", "Augmentin 625"). Use the brand name as primary — do NOT replace it with the generic/molecule name.
-2. dosage: Strength/dosage as written (e.g., "200mg", "250", "10mg/5ml")
-3. frequency: How often to take (e.g., "twice daily", "once at night", "thrice daily")
-4. duration_days: Number of days prescribed (estimate 7 if not clear)
-5. quantity: Total quantity to dispense (estimate based on frequency × duration if not written)
-6. instructions: Any special instructions (e.g., "after food", "before breakfast", "with water")
+1. medicine_name: The EXACT BRAND NAME + STRENGTH as written (e.g., "Augmentin 625 Duo", "Dolo 650", "Pan-D"). NEVER substitute with the generic/molecule name.
+2. generic_name: The molecule/generic name (e.g., "Paracetamol", "Pantoprazole+Domperidone") â provide this SEPARATELY.
+3. dosage: Strength/dosage as written (e.g., "625mg", "650mg", "40mg")
+4. frequency: How often to take (e.g., "twice daily", "once at night", "1-0-1", "thrice daily")
+5. duration_days: Number of days prescribed (estimate 7 if not clear)
+6. quantity: Total quantity to dispense (estimate based on frequency Ã duration if not written)
+7. instructions: Any special instructions (e.g., "after food", "before breakfast", "with water", "SOS")
 
 Also extract:
 - doctor_name: Doctor's name if visible
@@ -41,11 +67,14 @@ Also extract:
 - prescription_date: Date on prescription if visible (format: YYYY-MM-DD)
 
 IMPORTANT RULES:
-- ALWAYS keep brand names as primary. Indian doctors write brand names, not molecule names.
-- If text is handwritten and hard to read, make your best guess and note confidence
-- Include ALL medicines, even vitamins, supplements, creams, and topical applications
-- Provide handwriting_confidence score (0.0 to 1.0) for readability assessment
-- If you cannot read the prescription at all, return an empty medicines array
+- ALWAYS use the EXACT brand name as written on the prescription. This is the #1 priority.
+- If you can partially read a brand name, provide your best guess with the closest matching Indian brand.
+- Include the strength with the brand name (e.g., "Augmentin 625" not just "Augmentin").
+- Include ALL medicines â tablets, capsules, syrups, creams, drops, inhalers, injections.
+- For handwritten text, use your knowledge of common Indian pharmacy brands to decode ambiguous letters.
+- Provide handwriting_confidence score (0.0 to 1.0) for readability assessment.
+- Provide per-medicine confidence in the medicine_name field accuracy.
+- If you absolutely cannot read the prescription, return an empty medicines array.
 
 Respond ONLY with valid JSON in this exact format:
 {
@@ -57,12 +86,14 @@ Respond ONLY with valid JSON in this exact format:
   "handwriting_confidence": 0.0 to 1.0,
   "medicines": [
     {
-      "medicine_name": "Brand Name as written",
+      "medicine_name": "Exact Brand Name + Strength as written",
+      "generic_name": "Molecule/Generic name",
       "dosage": "500mg",
       "frequency": "twice daily",
       "duration_days": 7,
       "quantity": 14,
-      "instructions": "after food"
+      "instructions": "after food",
+      "name_confidence": 0.0 to 1.0
     }
   ]
 }`;
@@ -150,11 +181,13 @@ async function readPrescriptionFromBase64(base64Data, mimeType = 'image/jpeg') {
     // Ensure each medicine has required fields with defaults
     extracted.medicines = extracted.medicines.map((med, index) => ({
       medicine_name: med.medicine_name || `Unknown Medicine ${index + 1}`,
+      generic_name: med.generic_name || null,
       dosage: med.dosage || 'unknown',
       frequency: med.frequency || 'once daily',
       duration_days: med.duration_days || 7,
       quantity: med.quantity || 10,
       instructions: med.instructions || '',
+      name_confidence: med.name_confidence || 0.7,
     }));
 
     extracted.confidence = extracted.confidence || 0.8;
