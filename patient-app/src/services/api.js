@@ -7,7 +7,7 @@ const mockStores = {
     slug: 'apollo',
     name: 'Apollo Pharmacy - Banjara Hills',
     phone: '+91-40-4455-0000',
-    address: '123, Banjara Hills Road N.1, Hyderabad',
+    address: '123, Banjara Hills Road No.1, Hyderabad',
     hours: '9:00 AM - 10:00 PM',
     city: 'Hyderabad',
     license: 'AP-2024-001'
@@ -639,7 +639,8 @@ Respond ONLY with valid JSON:
     if (!query || query.trim().length < 2) return [];
 
     try {
-      return await this.apiCall('GET', `/medicines/search?q=${encodeURIComponent(query)}`);
+      const response = await this.apiCall('GET', `/medicines/search?q=${encodeURIComponent(query)}`);
+      return response.medicines || response || [];
     } catch (err) {
       console.log('Server unavailable, using mock data:', err.message);
       await new Promise(resolve => setTimeout(resolve, 200));
