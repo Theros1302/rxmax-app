@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcryptjs');
 const router = express.Router();
 const { authenticateToken, requireRole, generateToken } = require('../middleware/auth');
 const { getOne, getMany, update, insert, query } = require('../models');
@@ -212,6 +213,85 @@ router.put('/stores/:id', authenticateToken, requireAdmin, async (req, res) => {
   } catch (error) {
     console.error('Update store error:', error);
     res.status(500).json({ error: 'Failed to update store' });
+  }
+});
+
+// ====================================
+// 5b. POST /api/admin/stores
+// Admin creates a new store
+// ====================================
+router.post('/stores', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const body = req.body;
+    const name = body.name;
+    const owner_name = body.owner_name;
+    const phone = body.phone;
+    const email = body.email;
+    const password = body.password;
+    const address = body.address;
+    const city = body.city;
+    const state = body.state;
+    const pincode = body.pincode;
+    const license_number = body.license_number || null;
+    const gst_number = body.gst_number || null;
+
+    // Validation
+    if (!name || !owner_name || !phone || !password || !address || !city || !state || !pincode) {
+      return res.status(400).json({ error: 'Missing required fields: name, owner_name, phone, password, address, city, state, pincode' });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({ error: 'Password must be at least 8 characters' });
+    }
+
+    // Check if phone already registered
+    const existingStore = await getOne('SELECT id FROM stores WHERE phone = $1', [phone]);
+    if (existingStore) {
+      return res.status(409).json({ error: 'A store with this phone number already exists' });
+    }
+
+    // Generate slug from store name
+    const slug = name
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]/g, '') + `-${uuidv4().slice(0, 4)}`;
+
+    // Hash password
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    // Create store
+    const store = await insert('stores', {
+      id: uuidv4(),
+      name,
+      slug,
+      owner_name,
+      phone,
+      email,
+      password_hash: passwordHash,
+      address,
+      city,
+      state,
+      pincode,
+      license_number,
+      gst_number,
+      is_active: true,
+      is_verified: false,
+    });
+
+    res.status(201).json({
+      message: 'Store created successfully',
+      store: {
+        id: store.id,
+        name: store.name,
+        slug: store.slug,
+        phone: store.phone,
+        email: store.email,
+        city: store.city,
+      },
+    });
+  } catch (error) {
+    console.error('Admin create store error:', error);
+    res.status(500).json({ error: 'Failed to create store' });
   }
 });
 
