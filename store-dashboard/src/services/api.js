@@ -1,7 +1,7 @@
 // Comprehensive RxMax API Service
 // Real backend calls with comprehensive mock data fallback
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://rxmax-app.onrender.com';
 
 // ========== MOCK DATA ==========
 
