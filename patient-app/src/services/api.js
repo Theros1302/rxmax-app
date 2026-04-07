@@ -7,7 +7,7 @@ const mockStores = {
     slug: 'apollo',
     name: 'Apollo Pharmacy - Banjara Hills',
     phone: '+91-40-4455-0000',
-    address: '123, Banjara Hills Road No.1, Hyderabad',
+    address: '123, Banjara Hills Road N.1, Hyderabad',
     hours: '9:00 AM - 10:00 PM',
     city: 'Hyderabad',
     license: 'AP-2024-001'
@@ -301,7 +301,7 @@ const mockPatient = {
 
 // API Service Class
 class ApiService {
-  constructor(baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001') {
+  constructor(baseUrl = process.env.REACT_APP_API_URL || 'https://rxmax-app.onrender.com') {
     this.baseUrl = baseUrl;
     this.apiPath = '/api';
   }
