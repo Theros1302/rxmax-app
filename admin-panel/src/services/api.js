@@ -1,4 +1,6 @@
-// Mock API Service for RxMax Admin Panel
+// RxMax Admin Panel API Service
+
+const API_BASE = process.env.REACT_APP_API_URL || 'https://rxmax-app.onrender.com/api';
 
 // Generate mock data
 const mockStores = [
@@ -613,6 +615,28 @@ export const api = {
     };
   },
 
+  // Create Store (calls real backend API)
+  createStore: async (storeData) => {
+    try {
+      const token = localStorage.getItem('token') || 'mock-auth-token-12345';
+      const response = await fetch(`${API_BASE}/admin/stores`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(storeData),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        return { error: data.error || 'Failed to create store' };
+      }
+      return data;
+    } catch (err) {
+      return { error: err.message || 'Network error' };
+    }
+  },
+
   // Settings
   getPlatformSettings: async () => {
     return {
@@ -637,8 +661,8 @@ export const api = {
         },
       ],
       apiKeys: [
-        { id: 'key_1', name: 'Production API', masked: 'sk_live_••••••••5FzN' },
-        { id: 'key_2', name: 'Development API', masked: 'sk_test_••••••••2KpL' },
+        { id: 'key_1', name: 'Production API', masked: 'sk_live_â¢â¢â¢â¢â¢â¢â¢â¢5FzN' },
+        { id: 'key_2', name: 'Development API', masked: 'sk_test_â¢â¢â¢â¢â¢â¢â¢â¢2KpL' },
       ],
     };
   },
