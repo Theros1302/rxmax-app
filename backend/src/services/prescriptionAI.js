@@ -14,7 +14,7 @@ let model = null;
 
 if (process.env.GEMINI_API_KEY) {
   genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+  model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
   console.log('â AI Prescription Reading: Gemini API initialized');
 } else {
   console.log('â ï¸  AI Prescription Reading: No GEMINI_API_KEY set, running in demo mode');
