@@ -105,10 +105,8 @@ router.get('/stores', authenticateToken, requireAdmin, async (req, res) => {
     let paramCount = 0;
 
     if (status === 'active') {
-      paramCount++;
       sql += ` AND s.is_active = true`;
     } else if (status === 'inactive') {
-      paramCount++;
       sql += ` AND s.is_active = false`;
     }
 
