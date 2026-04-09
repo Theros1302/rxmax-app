@@ -1,6 +1,8 @@
 // RxMax Admin Panel API Service
 
-const API_BASE = process.env.REACT_APP_API_URL || 'https://rxmax-app.onrender.com/api';
+// Ensure API_BASE always ends with /api
+const rawBase = process.env.REACT_APP_API_URL || 'https://rxmax-backend.onrender.com';
+const API_BASE = rawBase.endsWith('/api') ? rawBase : `${rawBase.replace(/\/+$/, '')}/api`;
 
 // Generate mock data
 const mockStores = [
