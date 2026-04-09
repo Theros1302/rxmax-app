@@ -598,19 +598,14 @@ export const api = {
   // Dashboard
   getDashboardMetrics: async () => {
     try {
-      const dashboardData = await apiCall('GET', '/admin/dashboard');
-      return {
-        totalStores: dashboardData.total_stores || 12,
-        totalStoresGrowth: dashboardData.stores_growth || 15,
-        totalPatients: dashboardData.total_patients || 1500,
-        totalPatientsGrowth: dashboardData.patients_growth || 22,
-        totalOrdersMonth: dashboardData.total_orders_month || 3487,
-        totalRevenueMonth: dashboardData.total_revenue_month || 126.5,
-        activeRefillReminders: dashboardData.active_reminders || 342,
-        platformGMV: dashboardData.platform_gmv || 48.2,
-        revenueData: dashboardData.revenue_data || revenueData,
-        ordersByCity: dashboardData.orders_by_city || ordersByCity,
-        recentStoreSignups: dashboardData.recent_signups || recentStoreSignups,
+      totalStores: dashboardData.totalStores ?? dashboardData.total_stores ?? 0,
+        totalStoresGrowth: dashboardData.orderGrowthPercent ?? dashboardData.stores_growth ?? 0,
+        totalPatients: dashboardData.totalPatients ?? dashboardData.total_patients ?? 0,
+        totalPatientsGrowth: dashboardData.patients_growth ?? 0,
+        totalOrdersMonth: dashboardData.totalOrders ?? dashboardData.total_orders_month ?? 0,
+        totalRevenueMonth: dashboardData.totalRevenue ?? dashboardData.total_revenue_month ?? 0,
+        activeRefillReminders: dashboardData.active_reminders ?? 0,
+        platformGMV: dashboardData.platform_gmv ?? 0,
       };
     } catch (err) {
       console.warn('Dashboard API failed, using mock data:', err);
