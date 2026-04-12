@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useParams, useNavigate } from 'react-router-dom';
 import api from './services/api';
 
 // Pages
@@ -19,12 +19,15 @@ import BottomNav from './components/BottomNav';
 
 function StoreRouter() {
   const { slug } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (slug) {
       localStorage.setItem('storeSlug', slug);
+      // Redirect to home after saving the store slug
+      navigate('/', { replace: true });
     }
-  }, [slug]);
+  }, [slug, navigate]);
 
   return null;
 }
