@@ -15,8 +15,11 @@ const HomePage = ({ patient, store }) => {
         const refills = await api.getUpcomingRefills();
         const orders = await api.listOrders();
 
-        setUpcomingRefills(refills.slice(0, 3));
-        setRecentOrders(orders.reverse().slice(0, 3));
+        const refillsArr = Array.isArray(refills) ? refills : (refills && refills.refills) || [];
+        const ordersArr = Array.isArray(orders) ? orders : (orders && orders.orders) || [];
+
+        setUpcomingRefills(refillsArr.slice(0, 3));
+        setRecentOrders(ordersArr.reverse().slice(0, 3));
       } catch (error) {
         console.error('Error loading data:', error);
       } finally {
