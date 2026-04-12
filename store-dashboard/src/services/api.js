@@ -466,16 +466,17 @@ export const api = {
 
   register: async (storeData) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/store/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(storeData)
       });
       if (response.ok) {
         const data = await response.json();
+        const storeId = data.store?.id || data.storeId;
         localStorage.setItem('medibuddy_token', data.token);
-        localStorage.setItem('rxmax_store_id', data.storeId);
-        return data;
+        localStorage.setItem('rxmax_store_id', storeId);
+        return { ...data, storeId, patientLink: 'https://rxmax-patient-app.vercel.app/store/' + (data.store?.slug || storeId) };
       }
     } catch (error) {
       console.log('Backend unavailable, using mock data');
@@ -1201,9 +1202,10 @@ export const api = {
       });
       if (response.ok) {
         const data = await response.json();
+        const storeId = data.store?.id || data.storeId;
         localStorage.setItem('medibuddy_token', data.token);
-        localStorage.setItem('rxmax_store_id', data.storeId);
-        return data;
+        localStorage.setItem('rxmax_store_id', storeId);
+        return { ...data, storeId, patientLink: 'https://rxmax-patient-app.vercel.app/store/' + (data.store?.slug || storeId) };
       }
     } catch (error) {
       console.log('Server unavailable, checking local credentials');
@@ -1221,16 +1223,17 @@ export const api = {
 
   register: async (storeData) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/store/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(storeData)
       });
       if (response.ok) {
         const data = await response.json();
+        const storeId = data.store?.id || data.storeId;
         localStorage.setItem('medibuddy_token', data.token);
-        localStorage.setItem('rxmax_store_id', data.storeId);
-        return data;
+        localStorage.setItem('rxmax_store_id', storeId);
+        return { ...data, storeId, patientLink: 'https://rxmax-patient-app.vercel.app/store/' + (data.store?.slug || storeId) };
       }
     } catch (error) {
       console.log('Backend unavailable, using mock data');
@@ -1511,3 +1514,4 @@ export const api = {
     return { rate: 78, trend: 'up', previousRate: 72 };
   }
 };
+
