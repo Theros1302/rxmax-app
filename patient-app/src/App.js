@@ -41,7 +41,15 @@ function App() {
   useEffect(() => {
     const initializeApp = async () => {
       try {
-        let slug = localStorage.getItem('storeSlug') || 'apollo';
+        // Read slug from URL first (avoids race condition with StoreRouter)
+        var pathMatch = window.location.pathname.match(/^\/store\/(.+)/);
+        var slug;
+        if (pathMatch) {
+          slug = pathMatch[1];
+          localStorage.setItem('storeSlug', slug);
+        } else {
+          slug = localStorage.getItem('storeSlug') || 'apollo';
+        }
 
         const storeData = await api.getStoreBySlug(slug);
         setStore(storeData);
