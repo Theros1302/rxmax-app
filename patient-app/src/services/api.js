@@ -710,11 +710,34 @@ Respond ONLY with valid JSON:
   // Store
   async getStoreBySlug(slug) {
     try {
+      // Try finding store by slug first
       return await this.apiCall('GET', `/stores/${slug}`);
     } catch (err) {
-      console.log('Server unavailable, using mock data:', err.message);
-      await new Promise(resolve => setTimeout(resolve, 300));
-      return mockStores[slug] || mockStores['apollo'];
+      // If slug lookup failed, try by store ID
+      try {
+        return await this.apiCall('GET', `/stores/by-id/${slug}`);
+      } catch (err2) {
+        console.log('Server unavailable, using mock data:', err.message);
+        await new Promise(resolve => setTimeout(resolve, 300));
+        // Check mock stores by slug, then by ID, then fallback
+        if (mockStores[slug]) return mockStores[slug];
+        // Search mock stores by ID
+        var storeKeys = Object.keys(mockStores);
+        for (var i = 0; i < storeKeys.length; i++) {
+          if (mockStores[storeKeys[i]].id === slug) return mockStores[storeKeys[i]];
+        }
+        // Return a generic store entry for unknown slugs/IDs
+        return {
+          id: slug,
+          slug: slug,
+          name: 'Pharmacy - ' + slug,
+          phone: '',
+          address: '',
+          hours: '9:00 AM - 9:00 PM',
+          city: '',
+          license: ''
+        };
+      }
     }
   }
 
