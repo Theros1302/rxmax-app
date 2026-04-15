@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Edit2, X, Plus, LogOut } from 'lucide-react';
+import { Edit2, X, Plus, LogOut, MapPin, Phone, Clock, Store } from 'lucide-react';
 import api from '../services/api';
 
-const ProfilePage = ({ patient, onLogout }) => {
+const ProfilePage = ({ patient, onLogout, store }) => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -264,7 +264,7 @@ const ProfilePage = ({ patient, onLogout }) => {
                         className="tag-remove-btn"
                         onClick={() => handleRemoveAllergy(allergy)}
                       >
-                        ×
+                        \u00D7
                       </button>
                     </span>
                   ))}
@@ -317,7 +317,7 @@ const ProfilePage = ({ patient, onLogout }) => {
                         className="tag-remove-btn"
                         onClick={() => handleRemoveCondition(condition)}
                       >
-                        ×
+                        \u00D7
                       </button>
                     </span>
                   ))}
@@ -372,6 +372,68 @@ const ProfilePage = ({ patient, onLogout }) => {
           >
             Cancel
           </button>
+        </>
+      )}
+
+      {/* My Pharmacy */}
+      {store && (
+        <>
+          <div className="section-title" style={{ marginTop: '2rem' }}>My Pharmacy</div>
+          <div className="card" style={{
+            background: 'linear-gradient(135deg, #f0f7ff 0%, #e8f4f8 100%)',
+            border: '1px solid #d0e8ff'
+          }}>
+            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+              <div style={{
+                background: 'var(--primary)',
+                borderRadius: '10px',
+                padding: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}>
+                <Store size={20} color="white" />
+              </div>
+              <div>
+                <p style={{ margin: 0, fontWeight: '700', fontSize: '1rem', color: 'var(--text-dark)' }}>
+                  {store.name}
+                </p>
+                {store.license && (
+                  <p style={{ margin: '0.15rem 0 0 0', fontSize: '0.75rem', color: 'var(--text-light)' }}>
+                    License: {store.license}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {store.address && (
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                <MapPin size={15} color="var(--text-light)" style={{ marginTop: '0.1rem', flexShrink: 0 }} />
+                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                  {store.address}{store.city ? ', ' + store.city : ''}
+                </p>
+              </div>
+            )}
+
+            {store.phone && (
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <Phone size={15} color="var(--text-light)" style={{ flexShrink: 0 }} />
+                <a href={'tel:' + store.phone} style={{ fontSize: '0.85rem', color: 'var(--secondary)', textDecoration: 'none', fontWeight: '500' }}>
+                  {store.phone}
+                </a>
+              </div>
+            )}
+
+            {store.hours && (
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <Clock size={15} color="var(--text-light)" style={{ flexShrink: 0 }} />
+                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                  {store.hours}
+                </p>
+              </div>
+            )}
+          </div>
         </>
       )}
 
