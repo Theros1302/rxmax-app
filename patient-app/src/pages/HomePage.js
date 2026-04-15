@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, ShoppingCart, ClipboardList, Pill, AlertCircle } from 'lucide-react';
+import { Plus, ShoppingCart, ClipboardList, Pill, AlertCircle, MapPin, Phone, Clock } from 'lucide-react';
 import api from '../services/api';
 import StatusBadge from '../components/StatusBadge';
 
@@ -42,11 +42,48 @@ const HomePage = ({ patient, store }) => {
     <div className="page">
       {/* Header */}
       <div className="header">
-        <h1>Hi {patient?.name?.split(' ')[0]}! 👋</h1>
+        <h1>Hi {patient?.name?.split(' ')[0]}! \uD83D\uDC4B</h1>
         <p className="header-subtitle">
           {store ? `Welcome to ${store.name}` : 'Your trusted pharmacy companion'}
         </p>
       </div>
+
+      {/* Pharmacy Info Card */}
+      {store && (store.address || store.phone || store.hours) && (
+        <div className="card" style={{
+          background: 'linear-gradient(135deg, #f0f7ff 0%, #e8f4f8 100%)',
+          border: '1px solid #d0e8ff',
+          marginBottom: '1rem'
+        }}>
+          <p style={{ margin: '0 0 0.5rem 0', fontWeight: '700', fontSize: '0.95rem', color: 'var(--primary)' }}>
+            {store.name}
+          </p>
+          {store.address && (
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', marginBottom: '0.35rem' }}>
+              <MapPin size={14} color="var(--text-light)" style={{ marginTop: '0.15rem', flexShrink: 0 }} />
+              <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                {store.address}{store.city ? ', ' + store.city : ''}
+              </p>
+            </div>
+          )}
+          {store.phone && (
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.35rem' }}>
+              <Phone size={14} color="var(--text-light)" style={{ flexShrink: 0 }} />
+              <a href={'tel:' + store.phone} style={{ margin: 0, fontSize: '0.82rem', color: 'var(--secondary)', textDecoration: 'none', fontWeight: '500' }}>
+                {store.phone}
+              </a>
+            </div>
+          )}
+          {store.hours && (
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <Clock size={14} color="var(--text-light)" style={{ flexShrink: 0 }} />
+              <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                {store.hours}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Urgent Refills Alert */}
       {urgentRefills.length > 0 && (
@@ -145,7 +182,7 @@ const HomePage = ({ patient, store }) => {
                   {new Date(order.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: '2-digit' })}
                 </p>
                 <p style={{ fontWeight: '700', color: 'var(--primary)' }}>
-                  ₹{order.total}
+                  \u20B9{order.total}
                 </p>
               </div>
             </Link>
