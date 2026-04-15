@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
-import { DollarSign, ShoppingCart, AlertTriangle, Users } from 'lucide-react';
+import { DollarSign, ShoppingCart, AlertTriangle, Users, Link2, Copy, Check } from 'lucide-react';
 import StatCard from '../components/StatCard';
 import DataTable from '../components/DataTable';
 import { api } from '../services/api';
@@ -18,10 +18,39 @@ function DashboardPage() {
   const [recentOrders, setRecentOrders] = useState([]);
   const [atRiskRevenue, setAtRiskRevenue] = useState('₹0');
   const [refillsThisWeek, setRefillsThisWeek] = useState(0);
+  const [patientLink, setPatientLink] = useState('');
+  const [linkCopied, setLinkCopied] = useState(false);
 
   useEffect(() => {
     loadDashboardData();
+    loadPatientLink();
   }, []);
+
+  const loadPatientLink = async () => {
+    try {
+      var storeProfile = await api.getStoreProfile();
+      var slug = (storeProfile && storeProfile.slug) || '';
+      var storeId = (storeProfile && storeProfile.id) || localStorage.getItem('rxmax_store_id') || '';
+      var linkParam = slug || storeId;
+      if (linkParam) {
+        setPatientLink('https://rxmax-patient-app.vercel.app/store/' + linkParam);
+      }
+    } catch (err) {
+      var fallbackId = localStorage.getItem('rxmax_store_id') || '';
+      if (fallbackId) {
+        setPatientLink('https://rxmax-patient-app.vercel.app/store/' + fallbackId);
+      }
+    }
+  };
+
+  const copyPatientLink = () => {
+    if (patientLink) {
+      navigator.clipboard.writeText(patientLink).then(function() {
+        setLinkCopied(true);
+        setTimeout(function() { setLinkCopied(false); }, 2000);
+      });
+    }
+  };
 
   const loadDashboardData = async () => {
     try {
@@ -89,6 +118,61 @@ function DashboardPage() {
         <h1 className="page-title">Dashboard</h1>
         <p className="page-subtitle">Welcome back! Here's your store performance at a glance.</p>
       </div>
+
+      {patientLink && (
+        <div className="card" style={{ marginBottom: '24px', background: 'linear-gradient(135deg, #f0f7ff 0%, #e8f4f8 100%)', border: '1px solid #b3d9ff' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ background: 'var(--primary)', borderRadius: '10px', padding: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Link2 size={20} color="white" />
+              </div>
+              <div>
+                <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '600', color: 'var(--text-dark)' }}>Patient Onboarding Link</h4>
+                <p style={{ margin: '4px 0 0', fontSize: '13px', color: 'var(--text-light)' }}>Share this link with patients to connect them to your pharmacy</p>
+              </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: '1', minWidth: '280px', maxWidth: '600px' }}>
+              <input
+                type="text"
+                readOnly
+                value={patientLink}
+                style={{
+                  flex: 1,
+                  padding: '8px 12px',
+                  border: '1px solid #b3d9ff',
+                  borderRadius: '8px',
+                  fontSize: '13px',
+                  backgroundColor: 'white',
+                  color: 'var(--text-dark)',
+                  outline: 'none'
+                }}
+                onClick={function(e) { e.target.select(); }}
+              />
+              <button
+                onClick={copyPatientLink}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 16px',
+                  border: 'none',
+                  borderRadius: '8px',
+                  backgroundColor: linkCopied ? '#10b981' : 'var(--primary)',
+                  color: 'white',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: '500',
+                  whiteSpace: 'nowrap',
+                  transition: 'background-color 0.2s'
+                }}
+              >
+                {linkCopied ? <Check size={14} /> : <Copy size={14} />}
+                {linkCopied ? 'Copied!' : 'Copy Link'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-4">
         <StatCard
