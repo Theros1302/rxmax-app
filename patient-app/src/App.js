@@ -117,7 +117,7 @@ function App() {
               <Route path="/orders" element={<OrdersPage />} />
               <Route path="/orders/:id" element={<OrderDetailPage store={store} />} />
               <Route path="/refills" element={<RefillsPage />} />
-              <Route path="/profile" element={<ProfilePage patient={patient} onLogout={handleLogout} />} />
+              <Route path="/profile" element={<ProfilePage patient={patient} onLogout={handleLogout} store={store} />} />
               <Route path="/privacy" element={<PrivacyPolicyPage />} />
               <Route path="/login" element={<Navigate to="/" replace />} />
             </Routes>
