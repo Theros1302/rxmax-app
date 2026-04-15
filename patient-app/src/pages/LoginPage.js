@@ -102,11 +102,24 @@ const LoginPage = ({ onLoginSuccess, store }) => {
           <h1 style={{ margin: 0 }}>RxMax</h1>
         </div>
         {store && (
-          <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: '600' }}>
-            Welcome to {store.name}
-          </p>
+          <div style={{ marginTop: '0.5rem' }}>
+            <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: '700' }}>
+              {store.name}
+            </p>
+            {store.address && (
+              <p style={{ margin: '0.35rem 0 0 0', fontSize: '0.8rem', opacity: 0.85 }}>
+                {store.address}{store.city ? ', ' + store.city : ''}
+              </p>
+            )}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '0.4rem', fontSize: '0.78rem', opacity: 0.8 }}>
+              {store.phone && <span>{store.phone}</span>}
+              {store.hours && <span>{store.hours}</span>}
+            </div>
+          </div>
         )}
-        <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.85rem', opacity: 0.9 }}>Your trusted pharmacy companion</p>
+        {!store && (
+          <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.85rem', opacity: 0.9 }}>Your trusted pharmacy companion</p>
+        )}
       </div>
 
       <div style={{ flex: 1, padding: '0 1rem' }}>
@@ -173,7 +186,7 @@ const LoginPage = ({ onLoginSuccess, store }) => {
                   marginBottom: '1rem'
                 }}
               >
-                ← Change Number
+                \u2190 Change Number
               </button>
 
               <h2 style={{ marginBottom: '0.5rem' }}>Enter OTP</h2>
