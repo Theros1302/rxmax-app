@@ -11,6 +11,8 @@ import RefillsPage from './pages/RefillsPage';
 import SettingsPage from './pages/SettingsPage';
 import AdminSidebar from './components/AdminSidebar';
 
+import { ToastHost } from './components/Toast';
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
@@ -68,7 +70,8 @@ function App() {
           </div>
         </div>
       )}
-    </Router>
+    <ToastHost />
+      </Router>
   );
 }
 

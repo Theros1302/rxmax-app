@@ -13,6 +13,7 @@ import RefillsPage from './pages/RefillsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import SettingsPage from './pages/SettingsPage';
 import PrescriptionsPage from './pages/PrescriptionsPage';
+import { ToastHost } from './components/Toast';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -41,6 +42,7 @@ function App() {
           <Route path="/register" element={<RegisterPage onRegisterSuccess={handleRegisterSuccess} />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
+      <ToastHost />
       </Router>
     );
   }
@@ -64,10 +66,4 @@ function App() {
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
-        </main>
-      </div>
-    </Router>
-  );
-}
-
-export default App;
+     

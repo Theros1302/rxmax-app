@@ -32,6 +32,8 @@ function StoreRouter() {
   return null;
 }
 
+import { ToastHost } from './components/Toast';
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [patient, setPatient] = useState(null);
@@ -132,7 +134,8 @@ function App() {
           </Routes>
         )}
       </div>
-    </Router>
+    <ToastHost />
+      </Router>
   );
 }
 

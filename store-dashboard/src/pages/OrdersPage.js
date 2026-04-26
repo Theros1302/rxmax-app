@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DataTable from '../components/DataTable';
 import { api } from '../services/api';
+import { notify } from '../components/Toast';
 import { CheckCircle, Package, Truck } from 'lucide-react';
 
 function OrdersPage() {
@@ -21,6 +22,7 @@ function OrdersPage() {
       setLoading(false);
     } catch (error) {
       console.error('Error loading orders:', error);
+      notify.error(`Couldn't load orders: ${error.message || error}`);
       setLoading(false);
     }
   };
@@ -31,11 +33,15 @@ function OrdersPage() {
   };
 
   const handleStatusUpdate = async (orderId, newStatus) => {
-    await api.updateOrderStatus(orderId, newStatus);
-    const updated = orders.map(o =>
-      o.id === orderId ? { ...o, status: newStatus } : o
-    );
-    setOrders(updated);
+    try {
+      await api.updateOrderStatus(orderId, newStatus);
+      notify.success(`Order moved to ${newStatus}`);
+      // Re-fetch from server so the displayed status reflects what's really saved.
+      const fresh = await api.getOrders();
+      setOrders(fresh);
+    } catch (err) {
+      notify.error(`Couldn't update order: ${err.message || err}`);
+    }
   };
 
   const orderTableColumns = [
@@ -175,12 +181,4 @@ function OrdersPage() {
 
       <DataTable
         columns={orderTableColumns}
-        data={filteredOrders}
-        searchField="patientName"
-        onRowClick={(row) => navigate(`/orders/${row.id}`)}
-      />
-    </div>
-  );
-}
-
-export default OrdersPage;
+  
