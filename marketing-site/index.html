@@ -1,0 +1,3719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RxMax — Your Pharmacy, Now Digital | rxmax.online</title>
+    <meta name="description" content="RxMax empowers independent pharmacies with a smart digital storefront. AI-powered refill reminders, patient CRM, inventory management, WhatsApp engagement. Free forever plan.">
+    <meta name="keywords" content="pharmacy software India, pharmacy management, refill reminders, patient CRM, prescription OCR, WhatsApp pharmacy, independent pharmacy digital, RxMax">
+    <meta name="theme-color" content="#1B4F72">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="RxMax">
+    <link rel="canonical" href="https://rxmax.online/">
+
+    <!-- Open Graph / Facebook / WhatsApp link preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="RxMax">
+    <meta property="og:url" content="https://rxmax.online/">
+    <meta property="og:title" content="RxMax — Your Pharmacy, Now Digital">
+    <meta property="og:description" content="AI-powered refill reminders, patient CRM, prescription OCR, WhatsApp engagement. Free forever for independent pharmacies in India.">
+    <meta property="og:image" content="https://rxmax.online/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_IN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RxMax — Your Pharmacy, Now Digital">
+    <meta name="twitter:description" content="AI-powered refill reminders, patient CRM, prescription OCR, WhatsApp engagement. Free forever.">
+    <meta name="twitter:image" content="https://rxmax.online/og-image.png">
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='32' fill='%231B4F72'/%3E%3Ctext x='90' y='118' text-anchor='middle' font-family='Arial Black' font-size='76' font-weight='800' fill='white'%3ERx%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231B4F72'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial Black' font-size='32' font-weight='800' fill='white'%3ERx%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Configuration: replace FORMSPREE_FORM_ID after creating your form at https://formspree.io -->
+    <script>
+      window.RXMAX_CONFIG = {
+        FORMSPREE_ENDPOINT: 'https://formspree.io/f/mwvazwpb',
+        DEMO_LINKS: {
+          patient: 'https://app.rxmax.online',
+          store:   'https://store.rxmax.online',
+          admin:   'https://admin.rxmax.online',
+          api:     'https://api.rxmax.online'
+        }
+      };
+    </script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #1a1a1a;
+            background: #ffffff;
+            line-height: 1.6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* COLORS */
+        :root {
+            --navy: #1B4F72;
+            --blue: #2E86C1;
+            --green: #27AE60;
+            --orange: #F39C12;
+            --red: #E74C3C;
+            --gold: #F1C40F;
+            --dark-navy: #0F2D44;
+            --light-gray: #F8F9FA;
+            --border-gray: #E8E8E8;
+        }
+
+        /* UTILITIES */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-spacing {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 60px;
+            max-width: 600px;
+        }
+
+        button {
+            font-family: 'Inter', sans-serif;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: white;
+            padding: 12px 28px;
+            font-size: 16px;
+        }
+
+        .btn-primary:hover {
+            background: var(--blue);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 60, 90, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--navy);
+            padding: 12px 28px;
+            font-size: 16px;
+            border: 2px solid var(--navy);
+        }
+
+        .btn-secondary:hover {
+            background: var(--navy);
+            color: white;
+        }
+
+        .btn-large {
+            padding: 16px 40px;
+            font-size: 18px;
+        }
+
+        /* NAVBAR */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 0;
+            z-index: 1000;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            border-bottom-color: var(--border-gray);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            background: var(--navy);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--navy);
+        }
+
+        .nav-cta {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            padding: 8px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--navy);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 999;
+            flex-direction: column;
+            padding: 100px 20px 20px;
+        }
+
+        .mobile-menu.open {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            padding: 16px 0;
+            font-size: 18px;
+            text-decoration: none;
+            color: #333;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        /* HERO */
+        .hero {
+            margin-top: 80px;
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--navy);
+        }
+
+        .hero-text p {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .stat-box {
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .phone-mockup {
+            position: relative;
+            width: 320px;
+            margin: 0 auto;
+        }
+
+        .phone-frame {
+            width: 100%;
+            aspect-ratio: 9/19;
+            background: #000;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 28px;
+            background: #000;
+            border-radius: 0 0 30px 30px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding-top: 8px;
+        }
+
+        .phone-header {
+            padding: 16px;
+            background: var(--navy);
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .phone-greeting {
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .phone-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 0 16px;
+            flex: 1;
+        }
+
+        .phone-card {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .phone-refills {
+            padding: 16px;
+            border-top: 1px solid var(--border-gray);
+        }
+
+        .phone-refill-item {
+            background: var(--light-gray);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .phone-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid var(--border-gray);
+            font-size: 24px;
+        }
+
+        /* TRUST BAR */
+        .trust-bar {
+            background: var(--light-gray);
+            padding: 60px 0;
+        }
+
+        .trust-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .trust-icon {
+            font-size: 32px;
+        }
+
+        .trust-text {
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+        }
+
+        /* PROBLEM SECTION */
+        .problem {
+            background: var(--dark-navy);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .problem .section-title {
+            color: white;
+        }
+
+        .problem .section-subtitle {
+            color: #ccc;
+        }
+
+        .problem-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .problem-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .problem-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-8px);
+        }
+
+        .problem-card h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .problem-card p {
+            color: #ddd;
+            font-size: 14px;
+        }
+
+        .problem-stat {
+            text-align: center;
+            padding: 40px;
+            background: rgba(227, 76, 60, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(227, 76, 60, 0.3);
+        }
+
+        .problem-stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--red);
+        }
+
+        .problem-stat-text {
+            color: #ccc;
+            margin-top: 12px;
+        }
+
+        /* SOLUTION SECTION */
+        .solution {
+            padding: 80px 0;
+        }
+
+        .solution-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .solution-card {
+            padding: 30px;
+            border-radius: 12px;
+            background: white;
+            border: 1px solid var(--border-gray);
+            border-top: 4px solid var(--blue);
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:nth-child(2) {
+            border-top-color: var(--green);
+        }
+
+        .solution-card:nth-child(3) {
+            border-top-color: var(--orange);
+        }
+
+        .solution-card:nth-child(4) {
+            border-top-color: var(--red);
+        }
+
+        .solution-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .solution-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--navy);
+        }
+
+        .solution-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* HOW IT WORKS */
+        .how-it-works {
+            padding: 80px 0;
+            background: var(--light-gray);
+        }
+
+        .flow-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 60px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            position: relative;
+        }
+
+        .flow-circle {
+            width: 60px;
+            height: 60px;
+            background: var(--green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 12px;
+            font-size: 24px;
+        }
+
+        .flow-text {
+            font-weight: 600;
+            color: var(--navy);
+            font-size: 14px;
+        }
+
+        .flow-line {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: var(--green);
+        }
+
+        .callout {
+            background: rgba(39, 174, 96, 0.1);
+            border: 2px solid var(--green);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        /* DEMO SECTION */
+        .demo {
+            padding: 80px 0;
+        }
+
+        .demo-tabs {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .demo-tab {
+            padding: 16px 32px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #999;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .demo-tab.active {
+            color: var(--navy);
+            border-bottom-color: var(--navy);
+        }
+
+        .demo-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            align-items: center;
+        }
+
+        .demo-frame {
+            background: white;
+            border: 1px solid var(--border-gray);
+            border-radius: 12px;
+            overflow: hidden;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .demo-screen {
+            flex: 1;
+            padding: 30px;
+            display: none;
+        }
+
+        .demo-screen.active {
+            display: block;
+        }
+
+        .demo-nav {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            padding: 20px;
+            border-top: 1px solid var(--border-gray);
+            background: var(--light-gray);
+        }
+
+        .demo-nav-item {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid var(--border-gray);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .demo-nav-item.active {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        .demo-action {
+            padding: 16px;
+            background: var(--light-gray);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .demo-action:hover {
+            background: var(--navy);
+            color: white;
+        }
+
+        .demo-item {
+            padding: 16px;
+            background: var(--light-gray);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .demo-status {
+            font-size: 12px;
+            padding: 4px 12px;
+            background: var(--green);
+            color: white;
+            border-radius: 4px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--green);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            animation: slideIn 0.3s ease;
+            z-index: 9999;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* ROI CALCULATOR */
+        .roi-calculator {
+            background: var(--light-gray);
+            padding: 80px 0;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .slider-group {
+            margin-bottom: 40px;
+        }
+
+        .slider-label {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--navy);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .slider-value {
+            color: var(--blue);
+            font-weight: 700;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border-gray);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--navy);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(27, 79, 114, 0.4);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--navy);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(27, 79, 114, 0.4);
+        }
+
+        .results-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-gray);
+        }
+
+        .result-item {
+            margin-bottom: 20px;
+        }
+
+        .result-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .result-value {
+            font-size: 32px;
+            font-weight: 800;
+        }
+
+        .result-value.red {
+            color: var(--red);
+        }
+
+        .result-value.green {
+            color: var(--green);
+        }
+
+        .result-value.gold {
+            color: var(--gold);
+        }
+
+        /* BENEFITS */
+        .benefits {
+            padding: 80px 0;
+        }
+
+        .benefit-tabs {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .benefit-tab {
+            padding: 12px 24px;
+            background: var(--light-gray);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-tab.active {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        .benefit-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .benefit-card {
+            padding: 30px;
+            background: white;
+            border: 1px solid var(--border-gray);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .benefit-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .benefit-card h3 {
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--navy);
+        }
+
+        .benefit-card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* COMPARISON */
+        .comparison {
+            padding: 80px 0;
+            background: var(--light-gray);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .comparison-table th {
+            background: var(--navy);
+            color: white;
+            font-weight: 700;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--light-gray);
+        }
+
+        .comparison-cell {
+            text-align: center;
+        }
+
+        .check {
+            color: var(--green);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .cross {
+            color: var(--red);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* PRICING */
+        .pricing {
+            padding: 80px 0;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .pricing-card {
+            padding: 40px;
+            background: white;
+            border: 2px solid var(--border-gray);
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.popular {
+            border-color: var(--navy);
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(27, 79, 114, 0.2);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--green);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .pricing-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 12px;
+            margin-top: 12px;
+        }
+
+        .pricing-price {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+
+        .pricing-period {
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .pricing-feature {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-gray);
+            font-size: 14px;
+            color: #666;
+        }
+
+        .pricing-feature:before {
+            content: "✓ ";
+            color: var(--green);
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        .pricing-card.popular .pricing-feature:before {
+            color: var(--green);
+        }
+
+        /* SIGNUP FORM */
+        .signup-section {
+            padding: 80px 0;
+            background: var(--light-gray);
+        }
+
+        .form-container {
+            max-width: 500px;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--navy);
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(27, 79, 114, 0.1);
+        }
+
+        .form-error {
+            color: var(--red);
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .form-error.show {
+            display: block;
+        }
+
+        .form-submit {
+            width: 100%;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 12px;
+        }
+
+        .success-text {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .confetti {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: var(--green);
+            pointer-events: none;
+            animation: confettiFall 2s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translate(calc(-50% + var(--tx, 0)), calc(-50% + var(--ty, 0)));
+                opacity: 0;
+            }
+        }
+
+        /* DOWNLOAD */
+        .download-section {
+            padding: 80px 0;
+            background: var(--light-gray);
+        }
+
+        .download-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .download-card {
+            padding: 30px;
+            background: white;
+            border: 1px solid var(--border-gray);
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+        }
+
+        .coming-soon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .app-badge {
+            width: 100%;
+            padding: 20px;
+            background: #000;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            opacity: 0.5;
+            text-align: center;
+        }
+
+        .qr-container {
+            padding: 40px;
+            background: white;
+            border: 1px solid var(--border-gray);
+            border-radius: 12px;
+            text-align: center;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, var(--light-gray) 25%, transparent 25%, transparent 75%, var(--light-gray) 75%, var(--light-gray)),
+                        linear-gradient(45deg, var(--light-gray) 25%, transparent 25%, transparent 75%, var(--light-gray) 75%, var(--light-gray));
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            border: 2px solid var(--navy);
+            border-radius: 4px;
+        }
+
+        .qr-text {
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 80px 0;
+        }
+
+        .cta-content {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .cta-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .cta-step {
+            padding: 30px;
+            background: var(--light-gray);
+            border-radius: 12px;
+        }
+
+        .cta-step-number {
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .cta-step-text {
+            color: #666;
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--navy);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            text-align: center;
+            color: #ddd;
+        }
+
+        /* WHATSAPP BUTTON */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+        }
+
+        /* SCROLL ANIMATION */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 36px;
+            }
+
+            .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .hero-text p {
+                font-size: 16px;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .phone-mockup {
+                width: 240px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .demo-content {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .comparison-table {
+                font-size: 12px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px;
+            }
+
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+
+            .flow-container {
+                flex-direction: column;
+            }
+
+            .flow-line {
+                display: none;
+            }
+
+            .benefit-tabs {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 16px;
+            }
+
+            .whatsapp-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .hero-cta button {
+                width: 100%;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 28px;
+            }
+
+            .hero-text h1 {
+                font-size: 28px;
+            }
+
+            .section-spacing {
+                padding: 50px 0;
+            }
+
+            .trust-items {
+                gap: 20px;
+            }
+
+            .trust-text {
+                font-size: 13px;
+            }
+
+            .phone-mockup {
+                width: 200px;
+            }
+
+            .problem-stat-number {
+                font-size: 36px;
+            }
+
+            .result-value {
+                font-size: 24px;
+            }
+
+            .cta-step-number {
+                font-size: 32px;
+            }
+
+            .pricing-price {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <div id="modal"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback } = React;
+
+        // UTILITY FUNCTIONS
+        function formatIndianNumber(num) {
+            return new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+            }).format(num);
+        }
+
+        function AnimatedCounter({ end, duration = 2000 }) {
+            const [count, setCount] = useState(0);
+            const ref = useRef();
+
+            useEffect(() => {
+                const observer = new IntersectionObserver(
+                    entries => {
+                        if (entries[0].isIntersecting) {
+                            const start = Date.now();
+                            const timer = setInterval(() => {
+                                const elapsed = Date.now() - start;
+                                const progress = Math.min(elapsed / duration, 1);
+                                setCount(Math.floor(progress * end));
+                                if (progress === 1) clearInterval(timer);
+                            }, 16);
+                            observer.unobserve(ref.current);
+                        }
+                    },
+                    { threshold: 0.1 }
+                );
+
+                if (ref.current) observer.observe(ref.current);
+                return () => observer.disconnect();
+            }, [end, duration]);
+
+            return <span ref={ref}>{count}</span>;
+        }
+
+        function ScrollFadeIn({ children }) {
+            const ref = useRef();
+
+            useEffect(() => {
+                const observer = new IntersectionObserver(
+                    entries => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                            }
+                        });
+                    },
+                    { threshold: 0.1 }
+                );
+
+                if (ref.current) observer.observe(ref.current);
+                return () => observer.disconnect();
+            }, []);
+
+            return (
+                <div ref={ref} className="fade-in">
+                    {children}
+                </div>
+            );
+        }
+
+        // NAVBAR
+        function Navbar() {
+            const [scrolled, setScrolled] = useState(false);
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    setScrolled(window.scrollY > 50);
+                };
+
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const handleNavClick = (id) => {
+                setMobileMenuOpen(false);
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+
+            return (
+                <>
+                    <nav className={scrolled ? 'scrolled' : ''}>
+                        <div className="container navbar-container">
+                            <div className="logo">
+                                <div className="logo-icon">Rx</div>
+                                RxMax
+                            </div>
+
+                            <ul className="nav-links">
+                                <li><a onClick={() => handleNavClick('features')}>Features</a></li>
+                                <li><a onClick={() => handleNavClick('how-works')}>How It Works</a></li>
+                                <li><a onClick={() => handleNavClick('pricing')}>Pricing</a></li>
+                                <li><a onClick={() => handleNavClick('roi')}>ROI Calculator</a></li>
+                                <li><a onClick={() => handleNavClick('download')}>Download</a></li>
+                            </ul>
+
+                            <div className="nav-cta">
+                                <button className="btn-primary" onClick={() => handleNavClick('signup')}>
+                                    Get Started Free
+                                </button>
+                                <button
+                                    className="hamburger"
+                                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                >
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </nav>
+
+                    {mobileMenuOpen && (
+                        <div className="mobile-menu open">
+                            <a onClick={() => handleNavClick('features')}>Features</a>
+                            <a onClick={() => handleNavClick('how-works')}>How It Works</a>
+                            <a onClick={() => handleNavClick('pricing')}>Pricing</a>
+                            <a onClick={() => handleNavClick('roi')}>ROI Calculator</a>
+                            <a onClick={() => handleNavClick('download')}>Download</a>
+                            <button
+                                className="btn-primary btn-large"
+                                style={{ marginTop: '20px', width: '100%' }}
+                                onClick={() => handleNavClick('signup')}
+                            >
+                                Get Started Free
+                            </button>
+                        </div>
+                    )}
+                </>
+            );
+        }
+
+        // HERO
+        function Hero() {
+            const [showModal, setShowModal] = useState(false);
+
+            return (
+                <>
+                    <section className="hero">
+                        <div className="container">
+                            <div className="hero-content">
+                                <ScrollFadeIn>
+                                    <div className="hero-text">
+                                        <h1>Your Pharmacy, Now Digital.</h1>
+                                        <p>AI-powered refill reminders that recover ₹3-5 lakh every month. HIPAA-grade security, setup in 5 minutes.</p>
+
+                                        <div className="hero-cta">
+                                            <button className="btn-primary btn-large">
+                                                Start Free Today →
+                                            </button>
+                                            <button
+                                                className="btn-secondary btn-large"
+                                                onClick={() => setShowModal(true)}
+                                            >
+                                                Try Live Demo
+                                            </button>
+                                        </div>
+
+                                        <div className="hero-stats">
+                                            <div className="stat-box">
+                                                <div className="stat-number"><AnimatedCounter end={50} /></div>
+                                                <div className="stat-label">Stores Active</div>
+                                            </div>
+                                            <div className="stat-box">
+                                                <div className="stat-number"><AnimatedCounter end={10000} /></div>
+                                                <div className="stat-label">Patients Served</div>
+                                            </div>
+                                            <div className="stat-box">
+                                                <div className="stat-number"><AnimatedCounter end={40} />%</div>
+                                                <div className="stat-label">Refill Recovery</div>
+                                            </div>
+                                            <div className="stat-box">
+                                                <div className="stat-number">₹<AnimatedCounter end={50} />L+</div>
+                                                <div className="stat-label">Revenue Recovered</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ScrollFadeIn>
+
+                                <ScrollFadeIn>
+                                    <div className="phone-mockup">
+                                        <div className="phone-frame">
+                                            <div className="phone-notch"></div>
+                                            <div className="phone-screen">
+                                                <div className="phone-header">Sharma Medical | RxMax</div>
+                                                <div className="phone-greeting">Hi Priya! 👋</div>
+                                                <div className="phone-grid">
+                                                    <div className="phone-card">📤 Upload Rx</div>
+                                                    <div className="phone-card">🛒 Order</div>
+                                                    <div className="phone-card">📦 My Orders</div>
+                                                    <div className="phone-card">🔄 Refills</div>
+                                                </div>
+                                                <div className="phone-refills">
+                                                    <div className="phone-refill-item">
+                                                        <strong>BP Meds</strong><br/>
+                                                        Ready on Apr 10
+                                                    </div>
+                                                    <div className="phone-refill-item">
+                                                        <strong>Diabetes</strong><br/>
+                                                        Ready on Apr 15
+                                                    </div>
+                                                </div>
+                                                <div className="phone-nav">
+                                                    🏠 💊 📦 🔄 👤
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ScrollFadeIn>
+                            </div>
+                        </div>
+                    </section>
+
+                    {showModal && (
+                        <DemoModal onClose={() => setShowModal(false)} />
+                    )}
+                </>
+            );
+        }
+
+        // TRUST BAR
+        function TrustBar() {
+            return (
+                <section className="trust-bar">
+                    <div className="container">
+                        <div className="trust-items">
+                            <div className="trust-item">
+                                <div className="trust-icon">🔒</div>
+                                <div className="trust-text">HIPAA-grade security</div>
+                            </div>
+                            <div className="trust-item">
+                                <div className="trust-icon">✅</div>
+                                <div className="trust-text">Licensed pharmacy compliant</div>
+                            </div>
+                            <div className="trust-item">
+                                <div className="trust-icon">📱</div>
+                                <div className="trust-text">Works on any smartphone</div>
+                            </div>
+                            <div className="trust-item">
+                                <div className="trust-icon">⚡</div>
+                                <div className="trust-text">Setup in 5 minutes</div>
+                            </div>
+                            <div className="trust-item">
+                                <div className="trust-icon">💬</div>
+                                <div className="trust-text">WhatsApp-native</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        // PROBLEM SECTION
+        function ProblemSection() {
+            return (
+                <section className="problem">
+                    <div className="container section-spacing">
+                        <ScrollFadeIn>
+                            <h2 className="section-title">Your Revenue Is Leaking. Silently.</h2>
+                            <p className="section-subtitle">Patients forget refills. You lose sales. It's that simple.</p>
+                        </ScrollFadeIn>
+
+                        <div className="problem-cards">
+                            <ScrollFadeIn>
+                                <div className="problem-card">
+                                    <h3>50% of patients forget to refill their medications on time.</h3>
+                                    <p>No reminders, no system, no accountability. They just... forget.</p>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="problem-card">
+                                    <h3>Lost sales = Lost revenue = Lost growth.</h3>
+                                    <p>Every forgotten refill is a lost transaction. Every month. Every patient.</p>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="problem-card">
+                                    <h3>Manual reminders don't scale.</h3>
+                                    <p>Calling, messaging, WhatsApp—it's exhausting and error-prone.</p>
+                                </div>
+                            </ScrollFadeIn>
+                        </div>
+
+                        <ScrollFadeIn>
+                            <div className="problem-stat">
+                                <div className="problem-stat-number">₹3-5 Lakh/Month</div>
+                                <div className="problem-stat-text">Average revenue at risk for a typical pharmacy</div>
+                            </div>
+                        </ScrollFadeIn>
+                    </div>
+                </section>
+            );
+        }
+
+        // SOLUTION SECTION
+        function SolutionSection() {
+            return (
+                <section className="solution" id="features">
+                    <div className="container section-spacing">
+                        <ScrollFadeIn>
+                            <h2 className="section-title">RxMax: Everything You Need to Fight Back</h2>
+                            <p className="section-subtitle">AI-powered, fully automated, revenue-focused.</p>
+                        </ScrollFadeIn>
+
+                        <div className="solution-cards">
+                            <ScrollFadeIn>
+                                <div className="solution-card">
+                                    <h3>📱 Branded App</h3>
+                                    <p>Your pharmacy's own app, fully white-labeled. No third-party branding. 100% control.</p>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="solution-card">
+                                    <h3>🤖 AI Refills</h3>
+                                    <p>Intelligent reminders that predict when patients need refills—before they even think about it.</p>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="solution-card">
+                                    <h3>📊 Revenue Intelligence</h3>
+                                    <p>Real-time dashboard showing exactly how much revenue you're recovering and from where.</p>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="solution-card">
+                                    <h3>📦 Smart Inventory</h3>
+                                    <p>Sync patient refills with your stock. Never run out. Never over-stock.</p>
+                                </div>
+                            </ScrollFadeIn>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        // HOW IT WORKS
+        function HowItWorks() {
+            return (
+                <section className="how-it-works" id="how-works">
+                    <div className="container section-spacing">
+                        <ScrollFadeIn>
+                            <h2 className="section-title">How It Works</h2>
+                            <p className="section-subtitle">5 simple steps. Automated revenue recovery.</p>
+                        </ScrollFadeIn>
+
+                        <div className="flow-container">
+                            <ScrollFadeIn>
+                                <div className="flow-step">
+                                    <div className="flow-circle">1</div>
+                                    <div className="flow-text">Sign Up</div>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="flow-step">
+                                    <div className="flow-circle">2</div>
+                                    <div className="flow-text">Share QR</div>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="flow-step">
+                                    <div className="flow-circle">3</div>
+                                    <div className="flow-text">Patient Uploads Rx</div>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="flow-step">
+                                    <div className="flow-circle">4</div>
+                                    <div className="flow-text">Auto Nudge</div>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="flow-step">
+                                    <div className="flow-circle">5</div>
+                                    <div className="flow-text">Revenue Recovered</div>
+                                </div>
+                            </ScrollFadeIn>
+                        </div>
+
+                        <ScrollFadeIn>
+                            <div className="callout">
+                                ✓ Entire cycle is automated
+                            </div>
+                        </ScrollFadeIn>
+                    </div>
+                </section>
+            );
+        }
+
+        // DEMO MODAL
+        function DemoModal({ onClose }) {
+            return ReactDOM.createPortal(
+                <div className="modal-overlay open" onClick={onClose}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <button className="modal-close" onClick={onClose}>×</button>
+                        <h2 style={{ marginBottom: '30px', color: 'var(--navy)' }}>Live Demo</h2>
+                        <DemoSection />
+                    </div>
+                </div>,
+                document.getElementById('modal')
+            );
+        }
+
+        // DEMO SECTION
+        function DemoSection() {
+            const [activeTab, setActiveTab] = useState('patient');
+            const [patientScreen, setPatientScreen] = useState('home');
+            const [uploadedFile, setUploadedFile] = useState(null);
+            const [filePreview, setFilePreview] = useState(null);
+            const [uploadStep, setUploadStep] = useState('choose');
+            const [ocrResults, setOcrResults] = useState(null);
+            const [ocrScanning, setOcrScanning] = useState(false);
+            const [ocrProgress, setOcrProgress] = useState(0);
+            const [medSearch, setMedSearch] = useState('');
+            const [cart, setCart] = useState([]);
+            const [dashboardScreen, setDashboardScreen] = useState('dashboard');
+            const [toast, setToast] = useState('');
+
+            const showToast = (msg) => {
+                setToast(msg);
+                setTimeout(() => setToast(''), 3000);
+            };
+
+            return (
+                <>
+                    <div className="demo-tabs">
+                        <button
+                            className={`demo-tab ${activeTab === 'patient' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('patient')}
+                        >
+                            Patient App
+                        </button>
+                        <button
+                            className={`demo-tab ${activeTab === 'dashboard' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('dashboard')}
+                        >
+                            Store Dashboard
+                        </button>
+                    </div>
+
+                    {activeTab === 'patient' && (
+                        <div className="demo-frame">
+                            <div style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
+                                {patientScreen === 'home' && (
+                                    <div>
+                                        <h4 style={{ marginBottom: '16px', color: 'var(--navy)' }}>Hi Priya! 👋</h4>
+                                        <div className="demo-action" onClick={() => setPatientScreen('upload')}>
+                                            📤 Upload Prescription
+                                        </div>
+                                        <div className="demo-action" onClick={() => setPatientScreen('order')}>
+                                            🛒 Place Order
+                                        </div>
+                                        <div className="demo-action" onClick={() => setPatientScreen('orders')}>
+                                            📦 My Orders
+                                        </div>
+                                        <div className="demo-action" onClick={() => setPatientScreen('refills')}>
+                                            🔄 Refills
+                                        </div>
+                                    </div>
+                                )}
+
+                                {patientScreen === 'upload' && (
+                                    <div>
+                                        {/* STEP INDICATOR */}
+                                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', gap: '4px' }}>
+                                            {['Choose', 'Confirm', 'Scan', 'Results'].map((step, i) => {
+                                                const stepMap = { 'choose': 0, 'preview': 1, 'scanning': 2, 'results': 3 };
+                                                const currentIdx = stepMap[uploadStep] || 0;
+                                                const isActive = i <= currentIdx;
+                                                return (
+                                                    <React.Fragment key={step}>
+                                                        <div style={{
+                                                            width: '24px', height: '24px', borderRadius: '50%', fontSize: '11px',
+                                                            background: isActive ? 'var(--teal)' : '#e0e0e0',
+                                                            color: isActive ? '#fff' : '#999',
+                                                            display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700',
+                                                            transition: 'all 0.3s ease'
+                                                        }}>{i + 1}</div>
+                                                        <div style={{ fontSize: '10px', color: isActive ? 'var(--navy)' : '#bbb', fontWeight: isActive ? '600' : '400' }}>
+                                                            {step}
+                                                        </div>
+                                                        {i < 3 && <div style={{ flex: 1, height: '2px', background: isActive ? 'var(--teal)' : '#e0e0e0', transition: 'all 0.3s ease' }}></div>}
+                                                    </React.Fragment>
+                                                );
+                                            })}
+                                        </div>
+
+                                        {/* STEP 1: CHOOSE — Camera or Gallery */}
+                                        {uploadStep === 'choose' && (
+                                            <div>
+                                                <h4 style={{ marginBottom: '4px', color: 'var(--navy)', fontSize: '16px' }}>Upload Prescription</h4>
+                                                <p style={{ fontSize: '12px', color: '#888', marginBottom: '20px' }}>Choose how you'd like to add your prescription</p>
+
+                                                <div
+                                                    onClick={() => document.getElementById('rxCameraInput').click()}
+                                                    style={{
+                                                        border: '2px solid var(--teal)', borderRadius: '12px', padding: '20px',
+                                                        marginBottom: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '16px',
+                                                        background: 'linear-gradient(135deg, #e0f7fa 0%, #fff 100%)', transition: 'all 0.2s ease'
+                                                    }}
+                                                >
+                                                    <div style={{
+                                                        width: '48px', height: '48px', borderRadius: '12px', background: 'var(--teal)',
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', flexShrink: 0
+                                                    }}>📷</div>
+                                                    <div>
+                                                        <div style={{ fontWeight: '700', fontSize: '15px', color: 'var(--navy)' }}>Take Photo</div>
+                                                        <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>
+                                                            Open camera and capture your prescription
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input id="rxCameraInput" type="file" accept="image/*" capture="environment"
+                                                    style={{ display: 'none' }}
+                                                    onChange={(e) => {
+                                                        if (e.target.files && e.target.files[0]) {
+                                                            const file = e.target.files[0];
+                                                            setUploadedFile(file);
+                                                            const reader = new FileReader();
+                                                            reader.onload = (ev) => { setFilePreview(ev.target.result); setUploadStep('preview'); };
+                                                            reader.readAsDataURL(file);
+                                                        }
+                                                    }}
+                                                />
+
+                                                <div
+                                                    onClick={() => document.getElementById('rxGalleryInput').click()}
+                                                    style={{
+                                                        border: '2px solid #e0e0e0', borderRadius: '12px', padding: '20px',
+                                                        marginBottom: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '16px',
+                                                        background: '#fff', transition: 'all 0.2s ease'
+                                                    }}
+                                                >
+                                                    <div style={{
+                                                        width: '48px', height: '48px', borderRadius: '12px', background: '#f0f0f0',
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', flexShrink: 0
+                                                    }}>🖼️</div>
+                                                    <div>
+                                                        <div style={{ fontWeight: '700', fontSize: '15px', color: 'var(--navy)' }}>Upload from Gallery</div>
+                                                        <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>
+                                                            Choose an existing photo or PDF
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input id="rxGalleryInput" type="file" accept="image/*,application/pdf"
+                                                    style={{ display: 'none' }}
+                                                    onChange={(e) => {
+                                                        if (e.target.files && e.target.files[0]) {
+                                                            const file = e.target.files[0];
+                                                            setUploadedFile(file);
+                                                            if (file.type.startsWith('image/')) {
+                                                                const reader = new FileReader();
+                                                                reader.onload = (ev) => { setFilePreview(ev.target.result); setUploadStep('preview'); };
+                                                                reader.readAsDataURL(file);
+                                                            } else {
+                                                                setFilePreview(null);
+                                                                setUploadStep('preview');
+                                                            }
+                                                        }
+                                                    }}
+                                                />
+
+                                                <div style={{
+                                                    background: '#fff8e1', borderRadius: '8px', padding: '10px 12px', marginTop: '8px',
+                                                    display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '11px', color: '#8d6e00'
+                                                }}>
+                                                    <span style={{ fontSize: '14px' }}>💡</span>
+                                                    <span>For best results, ensure the prescription is well-lit, flat, and all text is readable</span>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* STEP 2: PREVIEW & CONFIRM */}
+                                        {uploadStep === 'preview' && (
+                                            <div>
+                                                <h4 style={{ marginBottom: '4px', color: 'var(--navy)', fontSize: '16px' }}>Confirm Prescription</h4>
+                                                <p style={{ fontSize: '12px', color: '#888', marginBottom: '16px' }}>Check that the image is clear and readable</p>
+
+                                                <div style={{
+                                                    borderRadius: '12px', overflow: 'hidden', border: '1px solid #e0e0e0',
+                                                    marginBottom: '16px', background: '#f5f5f5', position: 'relative'
+                                                }}>
+                                                    {filePreview ? (
+                                                        <img src={filePreview} alt="Prescription" style={{
+                                                            width: '100%', maxHeight: '220px', objectFit: 'contain', display: 'block'
+                                                        }} />
+                                                    ) : (
+                                                        <div style={{ padding: '40px', textAlign: 'center' }}>
+                                                            <div style={{ fontSize: '40px', marginBottom: '8px' }}>📄</div>
+                                                            <div style={{ fontWeight: '600', color: 'var(--navy)' }}>{uploadedFile && uploadedFile.name}</div>
+                                                            <div style={{ fontSize: '12px', color: '#888', marginTop: '4px' }}>PDF Document</div>
+                                                        </div>
+                                                    )}
+                                                    <div style={{
+                                                        position: 'absolute', top: '8px', right: '8px', background: 'rgba(0,0,0,0.6)',
+                                                        color: '#fff', fontSize: '10px', padding: '4px 8px', borderRadius: '12px'
+                                                    }}>
+                                                        {uploadedFile && (uploadedFile.size / 1024).toFixed(0)} KB
+                                                    </div>
+                                                </div>
+
+                                                <div style={{
+                                                    background: '#f0f4f8', borderRadius: '8px', padding: '12px', marginBottom: '16px'
+                                                }}>
+                                                    <div style={{ fontSize: '12px', color: '#555', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                            <span style={{ color: '#888' }}>File name</span>
+                                                            <span style={{ fontWeight: '600', color: 'var(--navy)' }}>{uploadedFile && uploadedFile.name}</span>
+                                                        </div>
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                            <span style={{ color: '#888' }}>Type</span>
+                                                            <span style={{ fontWeight: '600', color: 'var(--navy)' }}>
+                                                                {uploadedFile && uploadedFile.type.startsWith('image/') ? 'Photo' : 'PDF'}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div style={{ display: 'flex', gap: '10px' }}>
+                                                    <button
+                                                        style={{
+                                                            flex: 0.4, padding: '12px', borderRadius: '8px', border: '1px solid #ccc',
+                                                            background: '#fff', cursor: 'pointer', fontSize: '13px', fontWeight: '600', color: '#555'
+                                                        }}
+                                                        onClick={() => {
+                                                            setUploadedFile(null); setFilePreview(null); setUploadStep('choose');
+                                                        }}
+                                                    >
+                                                        Retake
+                                                    </button>
+                                                    <button
+                                                        className="btn-primary"
+                                                        style={{ flex: 1 }}
+                                                        onClick={async () => {
+                                                            setUploadStep('scanning');
+                                                            setOcrProgress(0);
+
+                                                            // Animate progress while API call runs
+                                                            const progressSteps = [15, 35, 55, 75];
+                                                            progressSteps.forEach((pct, i) => {
+                                                                setTimeout(() => setOcrProgress(pct), 500 * (i + 1));
+                                                            });
+
+                                                            try {
+                                                                // Convert file to base64
+                                                                const toBase64 = (file) => new Promise((resolve, reject) => {
+                                                                    const reader = new FileReader();
+                                                                    reader.readAsDataURL(file);
+                                                                    reader.onload = () => resolve(reader.result);
+                                                                    reader.onerror = reject;
+                                                                });
+                                                                const base64Image = await toBase64(uploadedFile);
+
+                                                                // Call our Vercel serverless OCR API
+                                                                const response = await fetch('/api/ocr', {
+                                                                    method: 'POST',
+                                                                    headers: { 'Content-Type': 'application/json' },
+                                                                    body: JSON.stringify({
+                                                                        image: base64Image,
+                                                                        mimeType: uploadedFile.type || 'image/jpeg'
+                                                                    })
+                                                                });
+
+                                                                const data = await response.json();
+                                                                setOcrProgress(90);
+
+                                                                const medicines = data.medicines || data.demo_medicines || [];
+                                                                if (medicines.length > 0) {
+                                                                    setTimeout(() => {
+                                                                        setOcrProgress(100);
+                                                                        setTimeout(() => {
+                                                                            setOcrResults(medicines);
+                                                                            setUploadStep('results');
+                                                                        }, 400);
+                                                                    }, 500);
+                                                                } else {
+                                                                    throw new Error('No medicines detected');
+                                                                }
+
+                                                            } catch (err) {
+                                                                console.log('OCR API not available, using demo data:', err.message);
+                                                                // Fallback to demo data — works even without API key
+                                                                setOcrProgress(90);
+                                                                setTimeout(() => {
+                                                                    setOcrProgress(100);
+                                                                    setTimeout(() => {
+                                                                        setOcrResults([
+                                                                            { generic: 'Amlodipine 5mg', brand: 'Amlong 5', dosage: '1-0-0', frequency: 'Once daily (morning)', days: 30, category: 'Antihypertensive', price: 85, manufacturer: 'Micro Labs' },
+                                                                            { generic: 'Metformin 500mg', brand: 'Glycomet 500', dosage: '1-0-1', frequency: 'Twice daily (morning & night)', days: 30, category: 'Antidiabetic', price: 45, manufacturer: 'USV' },
+                                                                            { generic: 'Atorvastatin 10mg', brand: 'Atorva 10', dosage: '0-0-1', frequency: 'Once daily (night)', days: 30, category: 'Statin', price: 120, manufacturer: 'Zydus' },
+                                                                            { generic: 'Pantoprazole 40mg', brand: 'Pan 40', dosage: '1-0-0', frequency: 'Once daily (before breakfast)', days: 15, category: 'Antacid', price: 65, manufacturer: 'Alkem' }
+                                                                        ]);
+                                                                        setUploadStep('results');
+                                                                    }, 400);
+                                                                }, 500);
+                                                            }
+                                                        }}
+                                                    >
+                                                        Confirm & Scan
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* STEP 3: SCANNING ANIMATION */}
+                                        {uploadStep === 'scanning' && (
+                                            <div style={{ textAlign: 'center', padding: '20px 0' }}>
+                                                <div style={{
+                                                    width: '80px', height: '80px', borderRadius: '50%',
+                                                    background: 'linear-gradient(135deg, var(--teal) 0%, #1565c0 100%)',
+                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                    margin: '0 auto 20px', fontSize: '36px',
+                                                    animation: 'pulse 1.5s ease-in-out infinite'
+                                                }}>
+                                                    🤖
+                                                </div>
+                                                <h4 style={{ color: 'var(--navy)', marginBottom: '8px' }}>AI is Reading Your Rx</h4>
+                                                <p style={{ fontSize: '12px', color: '#888', marginBottom: '20px' }}>
+                                                    {ocrProgress < 35 ? 'Uploading prescription...' :
+                                                     ocrProgress < 55 ? 'Detecting text regions...' :
+                                                     ocrProgress < 75 ? 'Reading medicine names...' :
+                                                     ocrProgress < 90 ? 'Matching brand names...' :
+                                                     ocrProgress < 100 ? 'Parsing dosage & frequency...' : 'Almost done!'}
+                                                </p>
+                                                <div style={{
+                                                    width: '100%', height: '8px', background: '#eee', borderRadius: '4px',
+                                                    overflow: 'hidden', marginBottom: '8px'
+                                                }}>
+                                                    <div style={{
+                                                        width: ocrProgress + '%', height: '100%',
+                                                        background: 'linear-gradient(90deg, var(--teal) 0%, #1565c0 100%)',
+                                                        borderRadius: '4px', transition: 'width 0.5s ease'
+                                                    }}></div>
+                                                </div>
+                                                <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--teal)' }}>{ocrProgress}%</div>
+                                            </div>
+                                        )}
+
+                                        {/* STEP 4: OCR RESULTS — Brand names + Dosage */}
+                                        {uploadStep === 'results' && ocrResults && (
+                                            <div>
+                                                <div style={{
+                                                    background: 'linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%)',
+                                                    borderRadius: '12px', padding: '14px', marginBottom: '16px',
+                                                    display: 'flex', alignItems: 'center', gap: '10px'
+                                                }}>
+                                                    <div style={{
+                                                        width: '36px', height: '36px', borderRadius: '50%', background: '#43a047',
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', flexShrink: 0
+                                                    }}>✅</div>
+                                                    <div>
+                                                        <div style={{ fontWeight: '700', fontSize: '14px', color: '#2e7d32' }}>Scan Complete</div>
+                                                        <div style={{ fontSize: '11px', color: '#558b2f' }}>
+                                                            {ocrResults.length} medicines detected with brand names & dosage
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {ocrResults.map((med, i) => (
+                                                    <div key={i} style={{
+                                                        border: '1px solid #e0e0e0', borderRadius: '12px', padding: '14px',
+                                                        marginBottom: '10px', background: '#fff'
+                                                    }}>
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                                            <div style={{ flex: 1 }}>
+                                                                <div style={{ fontWeight: '800', fontSize: '15px', color: 'var(--navy)' }}>
+                                                                    {med.brand}
+                                                                </div>
+                                                                <div style={{ fontSize: '11px', color: '#888', marginTop: '2px' }}>
+                                                                    {med.generic}
+                                                                </div>
+                                                            </div>
+                                                            <span style={{
+                                                                fontSize: '10px', background: '#e3f2fd', color: '#1565c0',
+                                                                padding: '3px 10px', borderRadius: '10px', fontWeight: '700', whiteSpace: 'nowrap'
+                                                            }}>
+                                                                {med.category}
+                                                            </span>
+                                                        </div>
+                                                        <div style={{
+                                                            display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px',
+                                                            marginTop: '10px', padding: '10px', background: '#f8f9fa', borderRadius: '8px'
+                                                        }}>
+                                                            <div>
+                                                                <div style={{ fontSize: '10px', color: '#999', textTransform: 'uppercase', fontWeight: '600' }}>Dosage</div>
+                                                                <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--navy)', marginTop: '2px' }}>{med.dosage}</div>
+                                                            </div>
+                                                            <div>
+                                                                <div style={{ fontSize: '10px', color: '#999', textTransform: 'uppercase', fontWeight: '600' }}>Duration</div>
+                                                                <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--navy)', marginTop: '2px' }}>{med.days} days</div>
+                                                            </div>
+                                                            <div style={{ gridColumn: '1 / -1' }}>
+                                                                <div style={{ fontSize: '10px', color: '#999', textTransform: 'uppercase', fontWeight: '600' }}>Frequency</div>
+                                                                <div style={{ fontSize: '12px', fontWeight: '600', color: 'var(--teal)', marginTop: '2px' }}>{med.frequency}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+                                                            <div>
+                                                                <span style={{ fontSize: '16px', fontWeight: '800', color: 'var(--teal)' }}>₹{med.price}</span>
+                                                                <span style={{ fontSize: '10px', color: '#aaa', marginLeft: '4px' }}>MRP</span>
+                                                            </div>
+                                                            {med.manufacturer && (
+                                                                <span style={{ fontSize: '10px', color: '#888', background: '#f5f5f5', padding: '2px 8px', borderRadius: '8px' }}>
+                                                                    {med.manufacturer}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                ))}
+
+                                                <div style={{
+                                                    background: '#f0f4f8', borderRadius: '8px', padding: '12px', marginTop: '12px', marginBottom: '16px',
+                                                    display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+                                                }}>
+                                                    <span style={{ fontWeight: '700', color: 'var(--navy)' }}>Estimated Total</span>
+                                                    <span style={{ fontWeight: '800', fontSize: '18px', color: 'var(--teal)' }}>
+                                                        ₹{ocrResults.reduce((sum, m) => sum + m.price, 0)}
+                                                    </span>
+                                                </div>
+
+                                                <div style={{ display: 'flex', gap: '10px' }}>
+                                                    <button
+                                                        className="btn-primary"
+                                                        style={{ flex: 1 }}
+                                                        onClick={() => {
+                                                            showToast('Order placed! Refill reminders auto-set.');
+                                                            setOcrResults(null); setUploadedFile(null); setFilePreview(null);
+                                                            setUploadStep('choose'); setPatientScreen('home');
+                                                        }}
+                                                    >
+                                                        Order All Medicines
+                                                    </button>
+                                                    <button
+                                                        style={{
+                                                            padding: '12px 16px', borderRadius: '8px', border: '1px solid #ccc',
+                                                            background: '#fff', cursor: 'pointer', fontSize: '13px', fontWeight: '600', color: '#555'
+                                                        }}
+                                                        onClick={() => {
+                                                            setOcrResults(null); setUploadedFile(null); setFilePreview(null);
+                                                            setUploadStep('choose');
+                                                        }}
+                                                    >
+                                                        Re-scan
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+
+                                {patientScreen === 'refills' && (
+                                    <div>
+                                        <h4 style={{ marginBottom: '16px', color: 'var(--navy)' }}>Active Refills</h4>
+                                        <div className="demo-item">
+                                            <div>
+                                                <strong>BP Medication</strong><br/>
+                                                <span style={{ fontSize: '12px', color: '#999' }}>Ready on Apr 10</span>
+                                            </div>
+                                            <button
+                                                className="btn-primary"
+                                                style={{ padding: '6px 12px', fontSize: '12px' }}
+                                                onClick={() => showToast('Refill reordered! ✓')}
+                                            >
+                                                Reorder
+                                            </button>
+                                        </div>
+                                        <div className="demo-item">
+                                            <div>
+                                                <strong>Diabetes Meds</strong><br/>
+                                                <span style={{ fontSize: '12px', color: '#999' }}>Ready on Apr 15</span>
+                                            </div>
+                                            <button
+                                                className="btn-primary"
+                                                style={{ padding: '6px 12px', fontSize: '12px' }}
+                                                onClick={() => showToast('Refill reordered! ✓')}
+                                            >
+                                                Reorder
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {patientScreen === 'orders' && (
+                                    <div>
+                                        <h4 style={{ marginBottom: '16px', color: 'var(--navy)' }}>Order History</h4>
+                                        <div className="demo-item">
+                                            <div>
+                                                <strong>Order #1234</strong><br/>
+                                                <span style={{ fontSize: '12px', color: '#999' }}>Mar 28, 2026</span>
+                                            </div>
+                                            <span className="demo-status">Delivered</span>
+                                        </div>
+                                        <div className="demo-item">
+                                            <div>
+                                                <strong>Order #1233</strong><br/>
+                                                <span style={{ fontSize: '12px', color: '#999' }}>Mar 20, 2026</span>
+                                            </div>
+                                            <span className="demo-status">Delivered</span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {patientScreen === 'order' && (() => {
+                                    const allMeds = [
+                                        { brand: 'Amlong 5', generic: 'Amlodipine 5mg', price: 85, category: 'BP', mfr: 'Micro Labs' },
+                                        { brand: 'Amlong 10', generic: 'Amlodipine 10mg', price: 130, category: 'BP', mfr: 'Micro Labs' },
+                                        { brand: 'Amtas 5', generic: 'Amlodipine 5mg', price: 78, category: 'BP', mfr: 'Intas' },
+                                        { brand: 'Stamlo 5', generic: 'Amlodipine 5mg', price: 92, category: 'BP', mfr: 'Dr Reddy\'s' },
+                                        { brand: 'Glycomet 500', generic: 'Metformin 500mg', price: 45, category: 'Diabetes', mfr: 'USV' },
+                                        { brand: 'Glycomet GP 1', generic: 'Metformin 500mg + Glimepiride 1mg', price: 115, category: 'Diabetes', mfr: 'USV' },
+                                        { brand: 'Glycomet GP 2', generic: 'Metformin 500mg + Glimepiride 2mg', price: 135, category: 'Diabetes', mfr: 'USV' },
+                                        { brand: 'Glucophage 500', generic: 'Metformin 500mg', price: 55, category: 'Diabetes', mfr: 'Franco-Indian' },
+                                        { brand: 'Glyciphage 500', generic: 'Metformin 500mg', price: 42, category: 'Diabetes', mfr: 'Franco-Indian' },
+                                        { brand: 'Amaryl M1', generic: 'Glimepiride 1mg + Metformin 500mg', price: 145, category: 'Diabetes', mfr: 'Sanofi' },
+                                        { brand: 'Amaryl 2', generic: 'Glimepiride 2mg', price: 95, category: 'Diabetes', mfr: 'Sanofi' },
+                                        { brand: 'Jalra 50', generic: 'Vildagliptin 50mg', price: 220, category: 'Diabetes', mfr: 'Novartis' },
+                                        { brand: 'Galvus 50', generic: 'Vildagliptin 50mg', price: 240, category: 'Diabetes', mfr: 'Novartis' },
+                                        { brand: 'Januvia 100', generic: 'Sitagliptin 100mg', price: 380, category: 'Diabetes', mfr: 'MSD' },
+                                        { brand: 'Atorva 10', generic: 'Atorvastatin 10mg', price: 120, category: 'Cholesterol', mfr: 'Zydus' },
+                                        { brand: 'Atorva 20', generic: 'Atorvastatin 20mg', price: 185, category: 'Cholesterol', mfr: 'Zydus' },
+                                        { brand: 'Atorva 40', generic: 'Atorvastatin 40mg', price: 260, category: 'Cholesterol', mfr: 'Zydus' },
+                                        { brand: 'Lipitor 10', generic: 'Atorvastatin 10mg', price: 145, category: 'Cholesterol', mfr: 'Pfizer' },
+                                        { brand: 'Rozavel 10', generic: 'Rosuvastatin 10mg', price: 175, category: 'Cholesterol', mfr: 'Sun Pharma' },
+                                        { brand: 'Rozavel 5', generic: 'Rosuvastatin 5mg', price: 125, category: 'Cholesterol', mfr: 'Sun Pharma' },
+                                        { brand: 'Crestor 10', generic: 'Rosuvastatin 10mg', price: 290, category: 'Cholesterol', mfr: 'AstraZeneca' },
+                                        { brand: 'Pan 40', generic: 'Pantoprazole 40mg', price: 65, category: 'Antacid', mfr: 'Alkem' },
+                                        { brand: 'Pan D', generic: 'Pantoprazole 40mg + Domperidone 30mg', price: 95, category: 'Antacid', mfr: 'Alkem' },
+                                        { brand: 'Pantocid 40', generic: 'Pantoprazole 40mg', price: 75, category: 'Antacid', mfr: 'Sun Pharma' },
+                                        { brand: 'Pantocid DSR', generic: 'Pantoprazole + Domperidone SR', price: 110, category: 'Antacid', mfr: 'Sun Pharma' },
+                                        { brand: 'Nexpro 40', generic: 'Esomeprazole 40mg', price: 135, category: 'Antacid', mfr: 'Torrent' },
+                                        { brand: 'Omez 20', generic: 'Omeprazole 20mg', price: 50, category: 'Antacid', mfr: 'Dr Reddy\'s' },
+                                        { brand: 'Razo 20', generic: 'Rabeprazole 20mg', price: 85, category: 'Antacid', mfr: 'Dr Reddy\'s' },
+                                        { brand: 'Telma 40', generic: 'Telmisartan 40mg', price: 95, category: 'BP', mfr: 'Glenmark' },
+                                        { brand: 'Telma 80', generic: 'Telmisartan 80mg', price: 145, category: 'BP', mfr: 'Glenmark' },
+                                        { brand: 'Telma H', generic: 'Telmisartan 40mg + HCTZ 12.5mg', price: 120, category: 'BP', mfr: 'Glenmark' },
+                                        { brand: 'Telma AM', generic: 'Telmisartan 40mg + Amlodipine 5mg', price: 140, category: 'BP', mfr: 'Glenmark' },
+                                        { brand: 'Repace 50', generic: 'Losartan 50mg', price: 85, category: 'BP', mfr: 'Sun Pharma' },
+                                        { brand: 'Repace H', generic: 'Losartan 50mg + HCTZ 12.5mg', price: 105, category: 'BP', mfr: 'Sun Pharma' },
+                                        { brand: 'Crocin Advance', generic: 'Paracetamol 500mg', price: 30, category: 'Pain', mfr: 'GSK' },
+                                        { brand: 'Crocin 650', generic: 'Paracetamol 650mg', price: 35, category: 'Pain', mfr: 'GSK' },
+                                        { brand: 'Dolo 650', generic: 'Paracetamol 650mg', price: 32, category: 'Pain', mfr: 'Micro Labs' },
+                                        { brand: 'Combiflam', generic: 'Ibuprofen 400mg + Paracetamol 325mg', price: 40, category: 'Pain', mfr: 'Sanofi' },
+                                        { brand: 'Brufen 400', generic: 'Ibuprofen 400mg', price: 35, category: 'Pain', mfr: 'Abbott' },
+                                        { brand: 'Voveran SR 100', generic: 'Diclofenac 100mg SR', price: 55, category: 'Pain', mfr: 'Novartis' },
+                                        { brand: 'Voveran 50', generic: 'Diclofenac 50mg', price: 28, category: 'Pain', mfr: 'Novartis' },
+                                        { brand: 'Zerodol SP', generic: 'Aceclofenac + Paracetamol + Serratiopeptidase', price: 75, category: 'Pain', mfr: 'IPCA' },
+                                        { brand: 'Zerodol P', generic: 'Aceclofenac 100mg + Paracetamol 325mg', price: 55, category: 'Pain', mfr: 'IPCA' },
+                                        { brand: 'Azithral 500', generic: 'Azithromycin 500mg', price: 110, category: 'Antibiotic', mfr: 'Alembic' },
+                                        { brand: 'Azithral 250', generic: 'Azithromycin 250mg', price: 75, category: 'Antibiotic', mfr: 'Alembic' },
+                                        { brand: 'Augmentin 625', generic: 'Amoxicillin + Clavulanic Acid', price: 195, category: 'Antibiotic', mfr: 'GSK' },
+                                        { brand: 'Moxikind CV 625', generic: 'Amoxicillin + Clavulanic Acid', price: 165, category: 'Antibiotic', mfr: 'Mankind' },
+                                        { brand: 'Cifran 500', generic: 'Ciprofloxacin 500mg', price: 85, category: 'Antibiotic', mfr: 'Sun Pharma' },
+                                        { brand: 'Ciplox 500', generic: 'Ciprofloxacin 500mg', price: 80, category: 'Antibiotic', mfr: 'Cipla' },
+                                        { brand: 'Monocef 200', generic: 'Cefixime 200mg', price: 120, category: 'Antibiotic', mfr: 'Aristo' },
+                                        { brand: 'Taxim O 200', generic: 'Cefixime 200mg', price: 135, category: 'Antibiotic', mfr: 'Alkem' },
+                                        { brand: 'Shelcal 500', generic: 'Calcium 500mg + Vitamin D3', price: 160, category: 'Supplement', mfr: 'Torrent' },
+                                        { brand: 'Shelcal HD', generic: 'Calcium + Vitamin D3 High Dose', price: 210, category: 'Supplement', mfr: 'Torrent' },
+                                        { brand: 'Supracal', generic: 'Calcium + Vitamin D3', price: 145, category: 'Supplement', mfr: 'GSK' },
+                                        { brand: 'Becosules', generic: 'B-Complex + Vitamin C', price: 45, category: 'Supplement', mfr: 'Pfizer' },
+                                        { brand: 'Zincovit', generic: 'Multivitamin + Multimineral', price: 95, category: 'Supplement', mfr: 'Apex' },
+                                        { brand: 'Limcee 500', generic: 'Vitamin C 500mg', price: 35, category: 'Supplement', mfr: 'Abbott' },
+                                        { brand: 'Revital H', generic: 'Multivitamin + Ginseng', price: 180, category: 'Supplement', mfr: 'Sun Pharma' },
+                                        { brand: 'Ecosprin 75', generic: 'Aspirin 75mg', price: 25, category: 'Blood Thinner', mfr: 'USV' },
+                                        { brand: 'Ecosprin 150', generic: 'Aspirin 150mg', price: 35, category: 'Blood Thinner', mfr: 'USV' },
+                                        { brand: 'Ecosprin AV 75/10', generic: 'Aspirin 75mg + Atorvastatin 10mg', price: 85, category: 'Cardiac', mfr: 'USV' },
+                                        { brand: 'Clopivas 75', generic: 'Clopidogrel 75mg', price: 65, category: 'Blood Thinner', mfr: 'Cipla' },
+                                        { brand: 'Clopilet 75', generic: 'Clopidogrel 75mg', price: 60, category: 'Blood Thinner', mfr: 'Sun Pharma' },
+                                        { brand: 'Thyronorm 25', generic: 'Thyroxine 25mcg', price: 85, category: 'Thyroid', mfr: 'Abbott' },
+                                        { brand: 'Thyronorm 50', generic: 'Thyroxine 50mcg', price: 110, category: 'Thyroid', mfr: 'Abbott' },
+                                        { brand: 'Thyronorm 75', generic: 'Thyroxine 75mcg', price: 135, category: 'Thyroid', mfr: 'Abbott' },
+                                        { brand: 'Thyronorm 100', generic: 'Thyroxine 100mcg', price: 155, category: 'Thyroid', mfr: 'Abbott' },
+                                        { brand: 'Eltroxin 50', generic: 'Thyroxine 50mcg', price: 120, category: 'Thyroid', mfr: 'GSK' },
+                                        { brand: 'Montair LC', generic: 'Montelukast 10mg + Levocetirizine 5mg', price: 145, category: 'Allergy', mfr: 'Cipla' },
+                                        { brand: 'Montair 10', generic: 'Montelukast 10mg', price: 115, category: 'Allergy', mfr: 'Cipla' },
+                                        { brand: 'Allegra 120', generic: 'Fexofenadine 120mg', price: 95, category: 'Allergy', mfr: 'Sanofi' },
+                                        { brand: 'Allegra 180', generic: 'Fexofenadine 180mg', price: 135, category: 'Allergy', mfr: 'Sanofi' },
+                                        { brand: 'Cetrizine 10', generic: 'Cetirizine 10mg', price: 15, category: 'Allergy', mfr: 'Various' },
+                                        { brand: 'Okacet 10', generic: 'Cetirizine 10mg', price: 25, category: 'Allergy', mfr: 'Cipla' },
+                                        { brand: 'Levocet 5', generic: 'Levocetirizine 5mg', price: 30, category: 'Allergy', mfr: 'Sun Pharma' },
+                                        { brand: 'Alex', generic: 'Phenylephrine + Chlorpheniramine + Dextromethorphan', price: 85, category: 'Cough', mfr: 'Glenmark' },
+                                        { brand: 'Benadryl', generic: 'Diphenhydramine + Ammonium Chloride', price: 65, category: 'Cough', mfr: 'Johnson & Johnson' },
+                                        { brand: 'Chericof', generic: 'Dextromethorphan + CPM + Phenylephrine', price: 55, category: 'Cough', mfr: 'Sun Pharma' },
+                                        { brand: 'Ascoril LS', generic: 'Ambroxol + Levosalbutamol + Guaifenesin', price: 95, category: 'Cough', mfr: 'Glenmark' },
+                                        { brand: 'Deriphyllin', generic: 'Theophylline + Etofylline', price: 35, category: 'Respiratory', mfr: 'Abbott' },
+                                        { brand: 'Asthalin Inhaler', generic: 'Salbutamol 100mcg', price: 135, category: 'Respiratory', mfr: 'Cipla' },
+                                        { brand: 'Foracort 200', generic: 'Budesonide + Formoterol', price: 365, category: 'Respiratory', mfr: 'Cipla' },
+                                        { brand: 'Seroflo 250', generic: 'Salmeterol + Fluticasone', price: 420, category: 'Respiratory', mfr: 'Cipla' },
+                                        { brand: 'Concor 5', generic: 'Bisoprolol 5mg', price: 95, category: 'Cardiac', mfr: 'Merck' },
+                                        { brand: 'Metolar XR 50', generic: 'Metoprolol 50mg XR', price: 75, category: 'Cardiac', mfr: 'Cipla' },
+                                        { brand: 'Nebicard 5', generic: 'Nebivolol 5mg', price: 120, category: 'Cardiac', mfr: 'Torrent' },
+                                        { brand: 'Aten 50', generic: 'Atenolol 50mg', price: 35, category: 'Cardiac', mfr: 'Zydus' },
+                                        { brand: 'Ramipril 5', generic: 'Ramipril 5mg', price: 65, category: 'Cardiac', mfr: 'Sanofi' },
+                                        { brand: 'Envas 5', generic: 'Enalapril 5mg', price: 40, category: 'Cardiac', mfr: 'Cadila' },
+                                        { brand: 'Ismo 20', generic: 'Isosorbide Mononitrate 20mg', price: 55, category: 'Cardiac', mfr: 'Cipla' },
+                                        { brand: 'Sorbitrate 5', generic: 'Isosorbide Dinitrate 5mg', price: 20, category: 'Cardiac', mfr: 'Sun Pharma' },
+                                        { brand: 'Nexito 10', generic: 'Escitalopram 10mg', price: 95, category: 'CNS', mfr: 'Sun Pharma' },
+                                        { brand: 'Nexito Plus', generic: 'Escitalopram 5mg + Clonazepam 0.5mg', price: 85, category: 'CNS', mfr: 'Sun Pharma' },
+                                        { brand: 'Cipralex 10', generic: 'Escitalopram 10mg', price: 140, category: 'CNS', mfr: 'Lundbeck' },
+                                        { brand: 'Oleanz 5', generic: 'Olanzapine 5mg', price: 65, category: 'CNS', mfr: 'Sun Pharma' },
+                                        { brand: 'Gabapin NT', generic: 'Gabapentin 300mg + Nortriptyline', price: 110, category: 'CNS', mfr: 'Intas' },
+                                        { brand: 'Pregabalin 75', generic: 'Pregabalin 75mg', price: 85, category: 'CNS', mfr: 'Various' },
+                                        { brand: 'Pregalin M 75', generic: 'Pregabalin 75mg + Methylcobalamin', price: 135, category: 'CNS', mfr: 'Torrent' },
+                                        { brand: 'Duphaston 10', generic: 'Dydrogesterone 10mg', price: 285, category: 'Gynae', mfr: 'Abbott' },
+                                        { brand: 'Susten 200', generic: 'Progesterone 200mg', price: 220, category: 'Gynae', mfr: 'Sun Pharma' },
+                                        { brand: 'Meprate 10', generic: 'Medroxyprogesterone 10mg', price: 65, category: 'Gynae', mfr: 'Serum Institute' },
+                                        { brand: 'Folvite 5', generic: 'Folic Acid 5mg', price: 18, category: 'Supplement', mfr: 'Pfizer' },
+                                        { brand: 'Nurokind Plus', generic: 'Methylcobalamin + ALA + Folic Acid + Pyridoxine', price: 145, category: 'Supplement', mfr: 'Mankind' },
+                                        { brand: 'Methylcobal', generic: 'Methylcobalamin 1500mcg', price: 95, category: 'Supplement', mfr: 'Aristo' },
+                                        { brand: 'Gudcef 200', generic: 'Cefpodoxime 200mg', price: 175, category: 'Antibiotic', mfr: 'Alkem' },
+                                        { brand: 'Oflox 200', generic: 'Ofloxacin 200mg', price: 65, category: 'Antibiotic', mfr: 'Cipla' },
+                                        { brand: 'Norflox TZ', generic: 'Norfloxacin + Tinidazole', price: 55, category: 'Antibiotic', mfr: 'Cipla' },
+                                        { brand: 'Metrogyl 400', generic: 'Metronidazole 400mg', price: 25, category: 'Antibiotic', mfr: 'J B Chemicals' },
+                                        { brand: 'Volini Gel', generic: 'Diclofenac Gel', price: 85, category: 'Topical', mfr: 'Sun Pharma' },
+                                        { brand: 'Moov', generic: 'Diclofenac + Methyl Salicylate', price: 75, category: 'Topical', mfr: 'Reckitt' },
+                                        { brand: 'Betadine', generic: 'Povidone Iodine 5%', price: 65, category: 'Topical', mfr: 'Win Medicare' },
+                                        { brand: 'Soframycin', generic: 'Framycetin Cream', price: 55, category: 'Topical', mfr: 'Sanofi' },
+                                        { brand: 'Candid B Cream', generic: 'Clotrimazole + Beclomethasone', price: 80, category: 'Topical', mfr: 'Glenmark' },
+                                        { brand: 'T-Bact', generic: 'Mupirocin 2%', price: 125, category: 'Topical', mfr: 'GSK' },
+                                        { brand: 'ORS Electral', generic: 'Oral Rehydration Salts', price: 22, category: 'GI', mfr: 'FDC' },
+                                        { brand: 'Econorm', generic: 'Saccharomyces boulardii', price: 95, category: 'GI', mfr: 'Dr Reddy\'s' },
+                                        { brand: 'Sporlac DS', generic: 'Lactic Acid Bacillus', price: 60, category: 'GI', mfr: 'Sanzyme' },
+                                        { brand: 'Dulcolax 5', generic: 'Bisacodyl 5mg', price: 25, category: 'GI', mfr: 'Sanofi' },
+                                        { brand: 'Cremaffin', generic: 'Liquid Paraffin + Milk of Magnesia', price: 130, category: 'GI', mfr: 'Abbott' },
+                                        { brand: 'Ganaton Total', generic: 'Itopride + Pantoprazole', price: 155, category: 'GI', mfr: 'Eisai' },
+                                        { brand: 'Ondansetron 4', generic: 'Ondansetron 4mg', price: 35, category: 'GI', mfr: 'Various' },
+                                        { brand: 'Emeset 4', generic: 'Ondansetron 4mg', price: 45, category: 'GI', mfr: 'Cipla' },
+                                        { brand: 'Insulin Mixtard', generic: 'Human Insulin 30/70', price: 165, category: 'Diabetes', mfr: 'Novo Nordisk' },
+                                        { brand: 'Lantus Solostar', generic: 'Insulin Glargine', price: 950, category: 'Diabetes', mfr: 'Sanofi' },
+                                        { brand: 'Novarapid', generic: 'Insulin Aspart', price: 680, category: 'Diabetes', mfr: 'Novo Nordisk' },
+                                        { brand: 'Jardiance 10', generic: 'Empagliflozin 10mg', price: 445, category: 'Diabetes', mfr: 'Boehringer' },
+                                        { brand: 'Forxiga 10', generic: 'Dapagliflozin 10mg', price: 395, category: 'Diabetes', mfr: 'AstraZeneca' },
+                                    ];
+                                    const q = medSearch.toLowerCase().trim();
+                                    const filtered = q.length >= 2 ? allMeds.filter(m =>
+                                        m.brand.toLowerCase().includes(q) || m.generic.toLowerCase().includes(q) || m.category.toLowerCase().includes(q) || m.mfr.toLowerCase().includes(q)
+                                    ) : [];
+                                    const totalDb = 108000;
+
+                                    return (
+                                    <div>
+                                        <h4 style={{ marginBottom: '4px', color: 'var(--navy)' }}>Quick Order</h4>
+                                        <p style={{ fontSize: '11px', color: '#888', marginBottom: '12px' }}>Search from 1,08,000+ medicines by brand, generic or category</p>
+                                        <div style={{ position: 'relative', marginBottom: '16px' }}>
+                                            <div style={{ position: 'relative' }}>
+                                                <input type="text" className="form-input"
+                                                    placeholder="Type medicine name... e.g. Amlong, Dolo, Pan"
+                                                    value={medSearch} onChange={(e) => setMedSearch(e.target.value)}
+                                                    style={{ marginBottom: 0, paddingLeft: '32px' }}
+                                                />
+                                                <span style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', fontSize: '16px', color: '#aaa' }}>🔍</span>
+                                            </div>
+                                            {q.length >= 2 && (
+                                                <div style={{
+                                                    position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 10,
+                                                    background: '#fff', border: '1px solid #e0e0e0', borderRadius: '0 0 10px 10px',
+                                                    maxHeight: '240px', overflowY: 'auto', boxShadow: '0 8px 24px rgba(0,0,0,0.12)'
+                                                }}>
+                                                    {filtered.length > 0 ? (
+                                                        <>
+                                                            <div style={{
+                                                                padding: '8px 12px', background: '#f8f9fa', fontSize: '10px', color: '#888',
+                                                                borderBottom: '1px solid #eee', position: 'sticky', top: 0, zIndex: 1
+                                                            }}>
+                                                                Showing {filtered.length} results from <strong>1,08,000+</strong> medicines
+                                                            </div>
+                                                            {filtered.map((med, i) => (
+                                                                <div key={i} style={{
+                                                                    padding: '10px 12px', cursor: 'pointer', borderBottom: '1px solid #f5f5f5',
+                                                                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                                                                    transition: 'background 0.15s'
+                                                                }}
+                                                                onMouseOver={(e) => e.currentTarget.style.background = '#f0f7ff'}
+                                                                onMouseOut={(e) => e.currentTarget.style.background = '#fff'}
+                                                                onClick={() => {
+                                                                    if (!cart.find(c => c.brand === med.brand)) setCart([...cart, { ...med, qty: 1 }]);
+                                                                    setMedSearch('');
+                                                                }}>
+                                                                    <div style={{ flex: 1 }}>
+                                                                        <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--navy)' }}>{med.brand}</div>
+                                                                        <div style={{ fontSize: '11px', color: '#888' }}>{med.generic}</div>
+                                                                        <div style={{ fontSize: '10px', color: '#bbb', marginTop: '2px' }}>{med.mfr}</div>
+                                                                    </div>
+                                                                    <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: '8px' }}>
+                                                                        <div style={{ fontWeight: '700', fontSize: '14px', color: 'var(--teal)' }}>₹{med.price}</div>
+                                                                        <span style={{
+                                                                            fontSize: '9px', background: '#e3f2fd', color: '#1565c0',
+                                                                            padding: '2px 6px', borderRadius: '8px', fontWeight: '600'
+                                                                        }}>{med.category}</span>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </>
+                                                    ) : (
+                                                        <div style={{ padding: '20px', textAlign: 'center', color: '#888', fontSize: '12px' }}>
+                                                            No matches found. Try a different name or brand.
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+                                            {q.length === 1 && (
+                                                <div style={{ fontSize: '11px', color: '#999', marginTop: '4px' }}>Type at least 2 characters to search...</div>
+                                            )}
+                                        </div>
+                                        {cart.length > 0 && (
+                                            <div>
+                                                <div style={{ fontSize: '12px', color: '#888', marginBottom: '8px', fontWeight: '700' }}>
+                                                    YOUR CART ({cart.length} {cart.length === 1 ? 'item' : 'items'})
+                                                </div>
+                                                {cart.map((item, i) => (
+                                                    <div key={i} style={{
+                                                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                                                        padding: '10px', background: '#f9f9f9', borderRadius: '8px', marginBottom: '8px'
+                                                    }}>
+                                                        <div style={{ flex: 1 }}>
+                                                            <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--navy)' }}>{item.brand}</div>
+                                                            <div style={{ fontSize: '11px', color: '#888' }}>{item.generic}</div>
+                                                        </div>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                            <button style={{
+                                                                width: '24px', height: '24px', borderRadius: '50%', border: '1px solid #ccc',
+                                                                background: '#fff', cursor: 'pointer', fontSize: '14px', display: 'flex',
+                                                                alignItems: 'center', justifyContent: 'center'
+                                                            }} onClick={() => {
+                                                                if (item.qty <= 1) setCart(cart.filter((_, j) => j !== i));
+                                                                else setCart(cart.map((c, j) => j === i ? {...c, qty: c.qty - 1} : c));
+                                                            }}>-</button>
+                                                            <span style={{ fontWeight: '700', fontSize: '13px', minWidth: '20px', textAlign: 'center' }}>{item.qty}</span>
+                                                            <button style={{
+                                                                width: '24px', height: '24px', borderRadius: '50%', border: '1px solid var(--teal)',
+                                                                background: 'var(--teal)', color: '#fff', cursor: 'pointer', fontSize: '14px',
+                                                                display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                                            }} onClick={() => setCart(cart.map((c, j) => j === i ? {...c, qty: c.qty + 1} : c))}>+</button>
+                                                        </div>
+                                                        <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--navy)', minWidth: '55px', textAlign: 'right' }}>
+                                                            ₹{item.price * item.qty}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                <div style={{
+                                                    display: 'flex', justifyContent: 'space-between', padding: '12px 0',
+                                                    borderTop: '2px solid #eee', marginTop: '8px', fontWeight: '800', color: 'var(--navy)', fontSize: '15px'
+                                                }}>
+                                                    <span>Total</span>
+                                                    <span style={{ color: 'var(--teal)' }}>₹{cart.reduce((sum, c) => sum + c.price * c.qty, 0)}</span>
+                                                </div>
+                                            </div>
+                                        )}
+                                        <button className="btn-primary"
+                                            style={{ width: '100%', marginTop: '12px', opacity: cart.length > 0 ? 1 : 0.5 }}
+                                            onClick={() => {
+                                                if (cart.length > 0) {
+                                                    showToast('Order placed! Your store will confirm shortly.');
+                                                    setCart([]); setPatientScreen('home');
+                                                } else { showToast('Search and add medicines to cart first'); }
+                                            }}
+                                        >
+                                            {cart.length > 0 ? 'Place Order (' + cart.length + ' items)' : 'Search Medicines Above'}
+                                        </button>
+                                    </div>
+                                    );
+                                })()}
+                            </div>
+
+                            <div className="demo-nav">
+                                <button
+                                    className={`demo-nav-item ${patientScreen === 'home' ? 'active' : ''}`}
+                                    onClick={() => setPatientScreen('home')}
+                                >
+                                    🏠
+                                </button>
+                                <button
+                                    className={`demo-nav-item ${patientScreen === 'order' ? 'active' : ''}`}
+                                    onClick={() => setPatientScreen('order')}
+                                >
+                                    💊
+                                </button>
+                                <button
+                                    className={`demo-nav-item ${patientScreen === 'orders' ? 'active' : ''}`}
+                                    onClick={() => setPatientScreen('orders')}
+                                >
+                                    📦
+                                </button>
+                                <button
+                                    className={`demo-nav-item ${patientScreen === 'refills' ? 'active' : ''}`}
+                                    onClick={() => setPatientScreen('refills')}
+                                >
+                                    🔄
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'dashboard' && (
+                        <div className="demo-frame">
+                            <div style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
+                                {dashboardScreen === 'dashboard' && (
+                                    <div>
+                                        <h4 style={{ marginBottom: '20px', color: 'var(--navy)' }}>Dashboard</h4>
+                                        <div style={{ marginBottom: '20px' }}>
+                                            <div style={{ fontSize: '12px', color: '#999', marginBottom: '4px' }}>Monthly Revenue</div>
+                                            <div style={{ fontSize: '24px', fontWeight: '700', color: 'var(--green)' }}>₹4,50,000</div>
+                                        </div>
+                                        <div style={{ marginBottom: '20px' }}>
+                                            <div style={{ fontSize: '12px', color: '#999', marginBottom: '4px' }}>Active Patients</div>
+                                            <div style={{ fontSize: '24px', fontWeight: '700', color: 'var(--blue)' }}>1,250</div>
+                                        </div>
+                                        <div className="demo-action" onClick={() => setDashboardScreen('patients')}>
+                                            👥 View Patients
+                                        </div>
+                                        <div className="demo-action" onClick={() => setDashboardScreen('refills')}>
+                                            🔄 Refill Intelligence
+                                        </div>
+                                    </div>
+                                )}
+
+                                {dashboardScreen === 'patients' && (
+                                    <div>
+                                        <h4 style={{ marginBottom: '16px', color: 'var(--navy)' }}>Patient CRM</h4>
+                                        <div className="demo-item">
+                                            <div>
+                                                <strong>Priya Sharma</strong><br/>
+                                                <span style={{ fontSize: '12px', color: '#999' }}>3 active refills</span>
+                                            </div>
+                                        </div>
+                                        <div className="demo-item">
+                                            <div>
+                                                <strong>Rajesh Kumar</strong><br/>
+                                                <span style={{ fontSize: '12px', color: '#999' }}>2 active refills</span>
+                                            </div>
+                                        </div>
+                                        <button
+                                            className="btn-secondary"
+                                            style={{ width: '100%', marginTop: '20px' }}
+                                            onClick={() => setDashboardScreen('dashboard')}
+                                        >
+                                            Back
+                                        </button>
+                                    </div>
+                                )}
+
+                                {dashboardScreen === 'refills' && (
+                                    <div>
+                                        <h4 style={{ marginBottom: '16px', color: 'var(--navy)' }}>Refill Intelligence</h4>
+                                        <div style={{
+                                            padding: '16px',
+                                            background: 'rgba(231, 76, 60, 0.1)',
+                                            border: '1px solid rgba(231, 76, 60, 0.3)',
+                                            borderRadius: '8px',
+                                            marginBottom: '20px'
+                                        }}>
+                                            <div style={{ fontSize: '12px', color: '#999', marginBottom: '4px' }}>Revenue at Risk</div>
+                                            <div style={{ fontSize: '20px', fontWeight: '700', color: 'var(--red)' }}>₹1,25,000</div>
+                                        </div>
+                                        <div className="demo-item">
+                                            <div>
+                                                <strong>Stage 1</strong><br/>
+                                                <span style={{ fontSize: '12px', color: '#999' }}>245 patients</span>
+                                            </div>
+                                        </div>
+                                        <button
+                                            className="btn-secondary"
+                                            style={{ width: '100%', marginTop: '20px' }}
+                                            onClick={() => setDashboardScreen('dashboard')}
+                                        >
+                                            Back
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="demo-nav">
+                                <button
+                                    className={`demo-nav-item ${dashboardScreen === 'dashboard' ? 'active' : ''}`}
+                                    onClick={() => setDashboardScreen('dashboard')}
+                                >
+                                    📊
+                                </button>
+                                <button
+                                    className={`demo-nav-item ${dashboardScreen === 'patients' ? 'active' : ''}`}
+                                    onClick={() => setDashboardScreen('patients')}
+                                >
+                                    👥
+                                </button>
+                                <button
+                                    className={`demo-nav-item ${dashboardScreen === 'refills' ? 'active' : ''}`}
+                                    onClick={() => setDashboardScreen('refills')}
+                                >
+                                    🔄
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {toast && (
+                        <div className="toast">{toast}</div>
+                    )}
+                </>
+            );
+        }
+
+        // ROI CALCULATOR
+        function ROICalculator() {
+            const [patients, setPatients] = useState(200);
+            const [monthlyValue, setMonthlyValue] = useState(1500);
+            const [forgottenPercent, setForgottenPercent] = useState(15);
+
+            const monthlyAtRisk = patients * monthlyValue * (forgottenPercent / 100);
+            const recovered = monthlyAtRisk * 0.4;
+            const annualRecovered = recovered * 12;
+
+            return (
+                <section className="roi-calculator" id="roi">
+                    <div className="container section-spacing">
+                        <ScrollFadeIn>
+                            <h2 className="section-title">How Much Revenue Are You Losing?</h2>
+                            <p className="section-subtitle">Find out exactly with our calculator.</p>
+                        </ScrollFadeIn>
+
+                        <div className="calculator-grid">
+                            <ScrollFadeIn>
+                                <div>
+                                    <div className="slider-group">
+                                        <label className="slider-label">
+                                            Total chronic patients
+                                            <span className="slider-value">{patients}</span>
+                                        </label>
+                                        <input
+                                            type="range"
+                                            min="50"
+                                            max="500"
+                                            value={patients}
+                                            onChange={(e) => setPatients(Number(e.target.value))}
+                                        />
+                                    </div>
+
+                                    <div className="slider-group">
+                                        <label className="slider-label">
+                                            Avg monthly value per patient
+                                            <span className="slider-value">{formatIndianNumber(monthlyValue)}</span>
+                                        </label>
+                                        <input
+                                            type="range"
+                                            min="500"
+                                            max="3000"
+                                            step="100"
+                                            value={monthlyValue}
+                                            onChange={(e) => setMonthlyValue(Number(e.target.value))}
+                                        />
+                                    </div>
+
+                                    <div className="slider-group">
+                                        <label className="slider-label">
+                                            Patients who forget to refill
+                                            <span className="slider-value">{forgottenPercent}%</span>
+                                        </label>
+                                        <input
+                                            type="range"
+                                            min="5"
+                                            max="30"
+                                            value={forgottenPercent}
+                                            onChange={(e) => setForgottenPercent(Number(e.target.value))}
+                                        />
+                                    </div>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="results-box">
+                                    <div className="result-item">
+                                        <div className="result-label">Monthly Revenue at Risk</div>
+                                        <div className="result-value red">{formatIndianNumber(monthlyAtRisk)}</div>
+                                    </div>
+
+                                    <div className="result-item">
+                                        <div className="result-label">With RxMax (40% recovery)</div>
+                                        <div className="result-value green">+{formatIndianNumber(recovered)}/month</div>
+                                    </div>
+
+                                    <div className="result-item">
+                                        <div className="result-label">Annual Revenue Recovered</div>
+                                        <div className="result-value gold">{formatIndianNumber(annualRecovered)}</div>
+                                    </div>
+
+                                    <button className="btn-primary btn-large" style={{ width: '100%', marginTop: '30px' }}>
+                                        Start Recovering Revenue →
+                                    </button>
+                                </div>
+                            </ScrollFadeIn>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        // BENEFITS
+        function Benefits() {
+            const [activeTab, setActiveTab] = useState('owners');
+
+            const ownerBenefits = [
+                { icon: '📱', title: 'Branded App', desc: 'Your pharmacy\'s own app with zero third-party branding.' },
+                { icon: '💰', title: '40% More Revenue', desc: 'Automated refills = consistent repeat sales.' },
+                { icon: '⚙️', title: 'Zero Effort Setup', desc: '5 minutes to go live. No technical skills needed.' },
+                { icon: '🔒', title: 'HIPAA Compliant', desc: 'Enterprise-grade security, audits, compliance built-in.' },
+                { icon: '📊', title: 'Real-time Analytics', desc: 'See exactly which patients, which meds, which revenue.' },
+                { icon: '🤖', title: 'AI-Powered', desc: 'Smart refill predictions powered by machine learning.' },
+            ];
+
+            const patientBenefits = [
+                { icon: '🕐', title: 'Never Miss a Dose', desc: 'Automatic reminders before you run out.' },
+                { icon: '🛒', title: 'Quick Reordering', desc: 'One-tap refills, no forms, no calls.' },
+                { icon: '💳', title: 'Easy Payments', desc: 'Multiple payment options, secure checkout.' },
+                { icon: '📦', title: 'Free Delivery', desc: 'Fast, reliable delivery to your doorstep.' },
+                { icon: '🤝', title: 'Personal Support', desc: 'Chat with your pharmacy anytime.' },
+                { icon: '🏥', title: 'Prescription History', desc: 'All your meds in one place, always accessible.' },
+            ];
+
+            const benefits = activeTab === 'owners' ? ownerBenefits : patientBenefits;
+
+            return (
+                <section className="benefits">
+                    <div className="container section-spacing">
+                        <ScrollFadeIn>
+                            <h2 className="section-title">Why Everyone Loves RxMax</h2>
+                            <p className="section-subtitle">From store owners to patients.</p>
+                        </ScrollFadeIn>
+
+                        <div className="benefit-tabs">
+                            <button
+                                className={`benefit-tab ${activeTab === 'owners' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('owners')}
+                            >
+                                For Store Owners
+                            </button>
+                            <button
+                                className={`benefit-tab ${activeTab === 'patients' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('patients')}
+                            >
+                                For Patients
+                            </button>
+                        </div>
+
+                        <div className="benefit-cards">
+                            {benefits.map((benefit, idx) => (
+                                <ScrollFadeIn key={idx}>
+                                    <div className="benefit-card">
+                                        <div className="benefit-icon">{benefit.icon}</div>
+                                        <h3>{benefit.title}</h3>
+                                        <p>{benefit.desc}</p>
+                                    </div>
+                                </ScrollFadeIn>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        // COMPARISON
+        function Comparison() {
+            const features = [
+                { name: 'Branded App', rxmax: true, competitors: false },
+                { name: 'AI Refill Reminders', rxmax: true, competitors: false },
+                { name: 'Revenue Dashboard', rxmax: true, competitors: false },
+                { name: 'WhatsApp Integration', rxmax: true, competitors: true },
+                { name: 'Inventory Sync', rxmax: true, competitors: false },
+                { name: 'HIPAA Compliant', rxmax: true, competitors: true },
+                { name: 'Patient CRM', rxmax: true, competitors: false },
+                { name: 'Setup Time', rxmax: true, competitors: false },
+            ];
+
+            return (
+                <section className="comparison">
+                    <div className="container section-spacing">
+                        <ScrollFadeIn>
+                            <h2 className="section-title">Why RxMax, Not 1mg?</h2>
+                            <p className="section-subtitle">Built for pharmacy revenue, not just convenience.</p>
+                        </ScrollFadeIn>
+
+                        <ScrollFadeIn>
+                            <table className="comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th className="comparison-cell">RxMax</th>
+                                        <th className="comparison-cell">1mg/PharmEasy</th>
+                                        <th className="comparison-cell">WhatsApp</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {features.map((feature, idx) => (
+                                        <tr key={idx}>
+                                            <td>{feature.name}</td>
+                                            <td className="comparison-cell">
+                                                {feature.rxmax ? <span className="check">✓</span> : <span className="cross">✕</span>}
+                                            </td>
+                                            <td className="comparison-cell">
+                                                {feature.competitors ? <span className="check">✓</span> : <span className="cross">✕</span>}
+                                            </td>
+                                            <td className="comparison-cell">
+                                                <span className="cross">✕</span>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </ScrollFadeIn>
+                    </div>
+                </section>
+            );
+        }
+
+        // PRICING
+        function Pricing() {
+            return (
+                <section className="pricing" id="pricing">
+                    <div className="container section-spacing">
+                        <ScrollFadeIn>
+                            <h2 className="section-title">Simple, Transparent Pricing</h2>
+                            <p className="section-subtitle">No hidden fees. Cancel anytime.</p>
+                        </ScrollFadeIn>
+
+                        <div className="pricing-cards">
+                            <ScrollFadeIn>
+                                <div className="pricing-card">
+                                    <div className="pricing-name">Free</div>
+                                    <div className="pricing-price">₹0</div>
+                                    <div className="pricing-period">Forever free</div>
+                                    <div className="pricing-features">
+                                        <div className="pricing-feature">Up to 100 patients</div>
+                                        <div className="pricing-feature">Basic reminders</div>
+                                        <div className="pricing-feature">WhatsApp support</div>
+                                    </div>
+                                    <button className="btn-secondary btn-large" style={{ width: '100%' }}>
+                                        Get Started
+                                    </button>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="pricing-card popular">
+                                    <div className="pricing-badge">Most Popular</div>
+                                    <div className="pricing-name">Basic</div>
+                                    <div className="pricing-price">₹999</div>
+                                    <div className="pricing-period">/month</div>
+                                    <div className="pricing-features">
+                                        <div className="pricing-feature">Up to 500 patients</div>
+                                        <div className="pricing-feature">AI-powered refills</div>
+                                        <div className="pricing-feature">Revenue dashboard</div>
+                                        <div className="pricing-feature">Priority support</div>
+                                    </div>
+                                    <button className="btn-primary btn-large" style={{ width: '100%' }}>
+                                        Start Free Trial
+                                    </button>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="pricing-card">
+                                    <div className="pricing-name">Pro</div>
+                                    <div className="pricing-price">₹2,499</div>
+                                    <div className="pricing-period">/month</div>
+                                    <div className="pricing-features">
+                                        <div className="pricing-feature">Unlimited patients</div>
+                                        <div className="pricing-feature">Advanced analytics</div>
+                                        <div className="pricing-feature">API access</div>
+                                        <div className="pricing-feature">Dedicated manager</div>
+                                        <div className="pricing-feature">Custom integrations</div>
+                                    </div>
+                                    <button className="btn-secondary btn-large" style={{ width: '100%' }}>
+                                        Contact Sales
+                                    </button>
+                                </div>
+                            </ScrollFadeIn>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        // SIGNUP FORM
+        function SignupForm() {
+            const [formState, setFormState] = useState({
+                storeName: '',
+                ownerName: '',
+                phone: '',
+                email: '',
+                city: '',
+                drugLicense: '',
+                gstNumber: '',
+            });
+            const [signupStep, setSignupStep] = useState('form');
+            const [otpValues, setOtpValues] = useState(['', '', '', '', '', '']);
+            const [otpTimer, setOtpTimer] = useState(30);
+            const [otpTimerActive, setOtpTimerActive] = useState(false);
+            const [errors, setErrors] = useState({});
+
+            React.useEffect(() => {
+                let interval;
+                if (otpTimerActive && otpTimer > 0) {
+                    interval = setInterval(() => setOtpTimer(t => t - 1), 1000);
+                } else if (otpTimer === 0) {
+                    setOtpTimerActive(false);
+                }
+                return () => clearInterval(interval);
+            }, [otpTimerActive, otpTimer]);
+
+            const handleChange = (e) => {
+                const { name, value } = e.target;
+                setFormState(prev => ({ ...prev, [name]: value }));
+                if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
+            };
+
+            const validateForm = () => {
+                const newErrors = {};
+                if (!formState.storeName.trim()) newErrors.storeName = 'Store name is required';
+                if (!formState.ownerName.trim()) newErrors.ownerName = 'Owner name is required';
+                if (!formState.phone || !/^[6-9]\d{9}$/.test(formState.phone.replace(/\D/g, ''))) {
+                    newErrors.phone = 'Valid 10-digit mobile number required';
+                }
+                if (formState.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formState.email)) {
+                    newErrors.email = 'Valid email required';
+                }
+                if (!formState.city.trim()) newErrors.city = 'City is required';
+                return newErrors;
+            };
+
+            const handleSendOtp = (e) => {
+                e.preventDefault();
+                const newErrors = validateForm();
+                if (Object.keys(newErrors).length === 0) {
+                    // Capture lead via Formspree (non-blocking).
+                    // Configure window.RXMAX_CONFIG.FORMSPREE_ENDPOINT in <head> after creating your form at formspree.io.
+                    try {
+                        const endpoint = (window.RXMAX_CONFIG && window.RXMAX_CONFIG.FORMSPREE_ENDPOINT) || '';
+                        if (endpoint && endpoint.indexOf('FORMSPREE_FORM_ID') === -1) {
+                            fetch(endpoint, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                                body: JSON.stringify({
+                                    storeName: formState.storeName,
+                                    ownerName: formState.ownerName,
+                                    phone: formState.phone,
+                                    email: formState.email,
+                                    city: formState.city,
+                                    drugLicense: formState.drugLicense,
+                                    gstNumber: formState.gstNumber,
+                                    source: 'rxmax.online — Register Your Pharmacy',
+                                    submittedAt: new Date().toISOString(),
+                                    _subject: 'New RxMax retailer signup: ' + formState.storeName + ' (' + formState.city + ')'
+                                })
+                            }).catch(() => { /* swallow — UX continues regardless */ });
+                        } else {
+                            console.warn('[RxMax] FORMSPREE_ENDPOINT not configured — lead not captured. Edit window.RXMAX_CONFIG in index.html.');
+                        }
+                    } catch (err) {
+                        console.error('[RxMax] lead capture error:', err);
+                    }
+                    setSignupStep('otp');
+                    setOtpTimer(30);
+                    setOtpTimerActive(true);
+                    setOtpValues(['', '', '', '', '', '']);
+                } else {
+                    setErrors(newErrors);
+                }
+            };
+
+            const handleOtpChange = (index, value) => {
+                if (value.length > 1) return;
+                const newOtp = [...otpValues];
+                newOtp[index] = value;
+                setOtpValues(newOtp);
+                if (value && index < 5) {
+                    const nextInput = document.getElementById('otp-' + (index + 1));
+                    if (nextInput) nextInput.focus();
+                }
+            };
+
+            const handleOtpKeyDown = (index, e) => {
+                if (e.key === 'Backspace' && !otpValues[index] && index > 0) {
+                    const prevInput = document.getElementById('otp-' + (index - 1));
+                    if (prevInput) prevInput.focus();
+                }
+            };
+
+            const handleVerifyOtp = () => {
+                const otp = otpValues.join('');
+                if (otp.length === 6) {
+                    setSignupStep('success');
+                    for (let i = 0; i < 30; i++) {
+                        const confetti = document.createElement('div');
+                        confetti.className = 'confetti';
+                        confetti.style.setProperty('--tx', (Math.random() - 0.5) * 300 + 'px');
+                        confetti.style.setProperty('--ty', (Math.random() - 0.5) * 300 + 'px');
+                        confetti.style.background = ['var(--green)', 'var(--blue)', 'var(--orange)', 'var(--gold)'][Math.floor(Math.random() * 4)];
+                        document.body.appendChild(confetti);
+                        setTimeout(() => confetti.remove(), 2000);
+                    }
+                }
+            };
+
+            const maskedPhone = formState.phone ? formState.phone.replace(/\D/g, '').replace(/(\d{2})\d{4}(\d{4})/, '$1****$2') : '';
+
+            return (
+                <section className="signup-section" id="signup">
+                    <div className="container">
+                        <ScrollFadeIn>
+                            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+                                <h2 className="section-title">Register Your Pharmacy</h2>
+                                <p className="section-subtitle">Join 50+ pharmacies already using RxMax — free forever</p>
+                            </div>
+                        </ScrollFadeIn>
+
+                        <ScrollFadeIn>
+                            <div className="form-container" style={{ margin: '0 auto' }}>
+
+                                {/* STEP 1: REGISTRATION FORM */}
+                                {signupStep === 'form' && (
+                                    <form onSubmit={handleSendOtp}>
+                                        <div style={{
+                                            background: '#e8f5e9', borderRadius: '8px', padding: '12px', marginBottom: '20px',
+                                            display: 'flex', alignItems: 'center', gap: '10px'
+                                        }}>
+                                            <span style={{ fontSize: '20px' }}>🎁</span>
+                                            <div style={{ fontSize: '13px', color: '#2e7d32' }}>
+                                                <strong>Free Plan includes:</strong> Unlimited patients, Rx upload, refill reminders, WhatsApp notifications
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label className="form-label">Store / Pharmacy Name *</label>
+                                            <input type="text" name="storeName" className="form-input"
+                                                placeholder="e.g., Sharma Medical Store" value={formState.storeName} onChange={handleChange} />
+                                            {errors.storeName && <div className="form-error show">{errors.storeName}</div>}
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label className="form-label">Owner Name *</label>
+                                            <input type="text" name="ownerName" className="form-input"
+                                                placeholder="Your full name" value={formState.ownerName} onChange={handleChange} />
+                                            {errors.ownerName && <div className="form-error show">{errors.ownerName}</div>}
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label className="form-label">Mobile Number * <span style={{ fontSize: '11px', color: '#888', fontWeight: '400' }}>(OTP will be sent here)</span></label>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0' }}>
+                                                <div style={{
+                                                    padding: '10px 12px', background: '#f0f4f8', border: '1px solid #e0e0e0',
+                                                    borderRight: 'none', borderRadius: '8px 0 0 8px', fontSize: '14px',
+                                                    color: 'var(--navy)', fontWeight: '600', whiteSpace: 'nowrap'
+                                                }}>+91</div>
+                                                <input type="tel" name="phone" className="form-input"
+                                                    style={{ borderRadius: '0 8px 8px 0', marginBottom: 0 }}
+                                                    placeholder="98765 43210" maxLength="10"
+                                                    value={formState.phone} onChange={handleChange} />
+                                            </div>
+                                            {errors.phone && <div className="form-error show">{errors.phone}</div>}
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label className="form-label">Email <span style={{ fontSize: '11px', color: '#888', fontWeight: '400' }}>(optional)</span></label>
+                                            <input type="email" name="email" className="form-input"
+                                                placeholder="you@pharmacy.com" value={formState.email} onChange={handleChange} />
+                                            {errors.email && <div className="form-error show">{errors.email}</div>}
+                                        </div>
+
+                                        <div style={{ display: 'flex', gap: '12px' }}>
+                                            <div className="form-group" style={{ flex: 1 }}>
+                                                <label className="form-label">City *</label>
+                                                <input type="text" name="city" className="form-input"
+                                                    placeholder="e.g., Mumbai" value={formState.city} onChange={handleChange} />
+                                                {errors.city && <div className="form-error show">{errors.city}</div>}
+                                            </div>
+                                        </div>
+
+                                        <div style={{ display: 'flex', gap: '12px' }}>
+                                            <div className="form-group" style={{ flex: 1 }}>
+                                                <label className="form-label">Drug License No. <span style={{ fontSize: '11px', color: '#888', fontWeight: '400' }}>(optional)</span></label>
+                                                <input type="text" name="drugLicense" className="form-input"
+                                                    placeholder="DL-XX-XXXXXXX" value={formState.drugLicense} onChange={handleChange} />
+                                            </div>
+                                            <div className="form-group" style={{ flex: 1 }}>
+                                                <label className="form-label">GST No. <span style={{ fontSize: '11px', color: '#888', fontWeight: '400' }}>(optional)</span></label>
+                                                <input type="text" name="gstNumber" className="form-input"
+                                                    placeholder="XXAXXXXXX" value={formState.gstNumber} onChange={handleChange} />
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" className="btn-primary btn-large" style={{ width: '100%' }}>
+                                            Send OTP & Create Account
+                                        </button>
+                                        <p style={{ textAlign: 'center', color: '#999', marginTop: '12px', fontSize: '11px' }}>
+                                            By signing up, you agree to RxMax Terms & Privacy Policy. No credit card required.
+                                        </p>
+                                    </form>
+                                )}
+
+                                {/* STEP 2: OTP VERIFICATION */}
+                                {signupStep === 'otp' && (
+                                    <div style={{ textAlign: 'center', padding: '20px 0' }}>
+                                        <div style={{
+                                            width: '64px', height: '64px', borderRadius: '50%', background: '#e8f5e9',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            margin: '0 auto 20px', fontSize: '28px'
+                                        }}>📱</div>
+                                        <h3 style={{ color: 'var(--navy)', marginBottom: '8px' }}>Verify Your Mobile</h3>
+                                        <p style={{ fontSize: '13px', color: '#888', marginBottom: '4px' }}>
+                                            We've sent a 6-digit OTP to
+                                        </p>
+                                        <p style={{ fontSize: '16px', fontWeight: '700', color: 'var(--navy)', marginBottom: '24px' }}>
+                                            +91 {maskedPhone}
+                                        </p>
+
+                                        <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '20px' }}>
+                                            {otpValues.map((val, i) => (
+                                                <input key={i} id={'otp-' + i} type="tel" maxLength="1"
+                                                    value={val}
+                                                    onChange={(e) => handleOtpChange(i, e.target.value)}
+                                                    onKeyDown={(e) => handleOtpKeyDown(i, e)}
+                                                    style={{
+                                                        width: '44px', height: '52px', textAlign: 'center', fontSize: '20px',
+                                                        fontWeight: '700', border: '2px solid ' + (val ? 'var(--teal)' : '#e0e0e0'),
+                                                        borderRadius: '10px', outline: 'none', color: 'var(--navy)',
+                                                        transition: 'all 0.2s ease'
+                                                    }}
+                                                    onFocus={(e) => e.target.style.borderColor = 'var(--teal)'}
+                                                    onBlur={(e) => e.target.style.borderColor = val ? 'var(--teal)' : '#e0e0e0'}
+                                                />
+                                            ))}
+                                        </div>
+
+                                        <button className="btn-primary btn-large"
+                                            style={{ width: '100%', opacity: otpValues.join('').length === 6 ? 1 : 0.5 }}
+                                            onClick={handleVerifyOtp}
+                                        >
+                                            Verify & Create Account
+                                        </button>
+
+                                        <div style={{ marginTop: '20px', fontSize: '13px', color: '#888' }}>
+                                            {otpTimer > 0 ? (
+                                                <span>Resend OTP in <strong style={{ color: 'var(--teal)' }}>{otpTimer}s</strong></span>
+                                            ) : (
+                                                <button
+                                                    style={{ background: 'none', border: 'none', color: 'var(--teal)', fontWeight: '700', cursor: 'pointer', fontSize: '13px' }}
+                                                    onClick={() => { setOtpTimer(30); setOtpTimerActive(true); setOtpValues(['', '', '', '', '', '']); }}
+                                                >
+                                                    Resend OTP
+                                                </button>
+                                            )}
+                                        </div>
+
+                                        <button
+                                            style={{ background: 'none', border: 'none', color: '#999', cursor: 'pointer', fontSize: '12px', marginTop: '12px' }}
+                                            onClick={() => setSignupStep('form')}
+                                        >
+                                            ← Change phone number
+                                        </button>
+                                    </div>
+                                )}
+
+                                {/* STEP 3: SUCCESS */}
+                                {signupStep === 'success' && (
+                                    <div className="success-message" style={{ textAlign: 'center', padding: '30px 0' }}>
+                                        <div style={{
+                                            width: '80px', height: '80px', borderRadius: '50%',
+                                            background: 'linear-gradient(135deg, #43a047 0%, #2e7d32 100%)',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            margin: '0 auto 20px', fontSize: '36px'
+                                        }}>✅</div>
+                                        <div className="success-title" style={{ fontSize: '22px', marginBottom: '8px' }}>Welcome to RxMax!</div>
+                                        <div className="success-text" style={{ color: '#666', marginBottom: '24px' }}>
+                                            Your free pharmacy account is ready, {formState.ownerName.split(' ')[0] || 'Owner'}!
+                                        </div>
+
+                                        <div style={{
+                                            background: '#f8f9fa', borderRadius: '12px', padding: '20px', textAlign: 'left',
+                                            marginBottom: '20px'
+                                        }}>
+                                            <div style={{ fontWeight: '700', color: 'var(--navy)', marginBottom: '12px', fontSize: '14px' }}>What happens next:</div>
+                                            {[
+                                                { icon: '📲', text: 'Download the RxMax Store app' },
+                                                { icon: '🏪', text: 'Set up your store profile & logo' },
+                                                { icon: '📸', text: 'Share your store QR code with patients' },
+                                                { icon: '💊', text: 'Patients upload Rx & order from you' }
+                                            ].map((step, i) => (
+                                                <div key={i} style={{
+                                                    display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 0',
+                                                    borderBottom: i < 3 ? '1px solid #eee' : 'none'
+                                                }}>
+                                                    <span style={{ fontSize: '18px' }}>{step.icon}</span>
+                                                    <span style={{ fontSize: '13px', color: '#555' }}>{step.text}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <button className="btn-primary btn-large" style={{ width: '100%' }}
+                                            onClick={() => {
+                                                setSignupStep('form');
+                                                setFormState({ storeName: '', ownerName: '', phone: '', email: '', city: '', drugLicense: '', gstNumber: '' });
+                                            }}
+                                        >
+                                            Go to Dashboard
+                                        </button>
+                                    </div>
+                                )}
+
+                            </div>
+                        </ScrollFadeIn>
+                    </div>
+                </section>
+            );
+        }
+
+        // DOWNLOAD SECTION
+        function DownloadSection() {
+            const links = (window.RXMAX_CONFIG && window.RXMAX_CONFIG.DEMO_LINKS) || {
+                patient: '#', store: '#', admin: '#'
+            };
+            return (
+                <section className="download-section" id="download">
+                    <div className="container section-spacing">
+                        <ScrollFadeIn>
+                            <h2 className="section-title">Try the Live Demo</h2>
+                            <p className="section-subtitle">Three real apps, live data — click any to log in and explore</p>
+                        </ScrollFadeIn>
+
+                        <div className="download-options" style={{ marginBottom: '60px' }}>
+                            <ScrollFadeIn>
+                                <div className="download-card">
+                                    <h3 style={{ marginBottom: '8px', color: 'var(--navy)' }}>Pharmacy Store</h3>
+                                    <p style={{ fontSize: '13px', color: '#666', marginBottom: '16px' }}>Inventory, orders, refills, patient CRM</p>
+                                    <a href={links.store} target="_blank" rel="noopener" className="btn-primary" style={{ width: '100%', display: 'inline-block', textAlign: 'center', textDecoration: 'none' }}>
+                                        Open Store Dashboard
+                                    </a>
+                                    <p style={{ fontSize: '12px', color: '#999', marginTop: '12px', textAlign: 'center' }}>
+                                        Login: 9876543200 / demo123
+                                    </p>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="download-card">
+                                    <h3 style={{ marginBottom: '8px', color: 'var(--navy)' }}>Patient App</h3>
+                                    <p style={{ fontSize: '13px', color: '#666', marginBottom: '16px' }}>Upload Rx, place orders, track refills</p>
+                                    <a href={links.patient} target="_blank" rel="noopener" className="btn-primary" style={{ width: '100%', display: 'inline-block', textAlign: 'center', textDecoration: 'none' }}>
+                                        Open Patient App
+                                    </a>
+                                    <p style={{ fontSize: '12px', color: '#999', marginTop: '12px', textAlign: 'center' }}>
+                                        OTP login (any 10-digit number)
+                                    </p>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="download-card">
+                                    <h3 style={{ marginBottom: '8px', color: 'var(--navy)' }}>Platform Admin</h3>
+                                    <p style={{ fontSize: '13px', color: '#666', marginBottom: '16px' }}>All stores, all patients, all analytics</p>
+                                    <a href={links.admin} target="_blank" rel="noopener" className="btn-primary" style={{ width: '100%', display: 'inline-block', textAlign: 'center', textDecoration: 'none' }}>
+                                        Open Admin Panel
+                                    </a>
+                                    <p style={{ fontSize: '12px', color: '#999', marginTop: '12px', textAlign: 'center' }}>
+                                        Login: 9999999999 / rxmaxadmin2026
+                                    </p>
+                                </div>
+                            </ScrollFadeIn>
+                        </div>
+
+                        <ScrollFadeIn>
+                            <div className="qr-container">
+                                <div className="qr-code"></div>
+                                <div className="qr-text">Scan to Download</div>
+                                <p style={{ fontSize: '12px', color: '#999' }}>
+                                    Works on any smartphone
+                                </p>
+                            </div>
+                        </ScrollFadeIn>
+                    </div>
+                </section>
+            );
+        }
+
+        // CTA SECTION
+        function CTASection() {
+            return (
+                <section className="cta-section">
+                    <div className="container">
+                        <ScrollFadeIn>
+                            <div className="cta-content">
+                                <h2 className="section-title">Ready to Go Digital?</h2>
+                                <p className="section-subtitle">Join pharmacies recovering ₹50L+ in revenue</p>
+                            </div>
+                        </ScrollFadeIn>
+
+                        <div className="cta-steps">
+                            <ScrollFadeIn>
+                                <div className="cta-step">
+                                    <div className="cta-step-number">1</div>
+                                    <div className="cta-step-text">Sign Up</div>
+                                    <p style={{ fontSize: '12px', color: '#999', marginTop: '8px' }}>
+                                        Free account in 2 minutes
+                                    </p>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="cta-step">
+                                    <div className="cta-step-number">2</div>
+                                    <div className="cta-step-text">Share QR</div>
+                                    <p style={{ fontSize: '12px', color: '#999', marginTop: '8px' }}>
+                                        Patients scan and upload Rx
+                                    </p>
+                                </div>
+                            </ScrollFadeIn>
+
+                            <ScrollFadeIn>
+                                <div className="cta-step">
+                                    <div className="cta-step-number">3</div>
+                                    <div className="cta-step-text">Watch Revenue Grow</div>
+                                    <p style={{ fontSize: '12px', color: '#999', marginTop: '8px' }}>
+                                        Automated refill recovery starts immediately
+                                    </p>
+                                </div>
+                            </ScrollFadeIn>
+                        </div>
+
+                        <ScrollFadeIn>
+                            <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '40px' }}>
+                                <button className="btn-primary btn-large">
+                                    Create Your Store
+                                </button>
+                                <button className="btn-secondary btn-large">
+                                    Schedule a Demo
+                                </button>
+                            </div>
+                        </ScrollFadeIn>
+                    </div>
+                </section>
+            );
+        }
+
+        // FOOTER
+        function Footer() {
+            return (
+                <footer>
+                    <div className="container">
+                        <div className="footer-content">
+                            <div className="footer-column">
+                                <h3>RxMax</h3>
+                                <p style={{ marginBottom: '16px' }}>AI-powered pharmacy management platform</p>
+                                <div className="social-links">
+                                    <a href="#" title="Twitter">𝕏</a>
+                                    <a href="#" title="Facebook">f</a>
+                                    <a href="#" title="LinkedIn">in</a>
+                                    <a href="#" title="Instagram">📷</a>
+                                </div>
+                            </div>
+
+                            <div className="footer-column">
+                                <h3>Product</h3>
+                                <ul>
+                                    <li><a href="#">Features</a></li>
+                                    <li><a href="#">Pricing</a></li>
+                                    <li><a href="#">How It Works</a></li>
+                                    <li><a href="#">ROI Calculator</a></li>
+                                </ul>
+                            </div>
+
+                            <div className="footer-column">
+                                <h3>Company</h3>
+                                <ul>
+                                    <li><a href="#">About</a></li>
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="#">Careers</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                </ul>
+                            </div>
+
+                            <div className="footer-column">
+                                <h3>Support</h3>
+                                <ul>
+                                    <li><a href="#">Help Center</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Security</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div className="footer-bottom">
+                            <p>Made with ❤️ in India • © 2026 RxMax, a Theros venture. All rights reserved.</p>
+                        </div>
+                    </div>
+                </footer>
+            );
+        }
+
+        // WHATSAPP BUTTON
+        function WhatsAppButton() {
+            return (
+                <a
+                    className="whatsapp-btn"
+                    href="https://wa.me/919876543210?text=Hi%2C%20I%27m%20interested%20in%20RxMax%20for%20my%20pharmacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Chat on WhatsApp"
+                    style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    💬
+                </a>
+            );
+        }
+
+        // MAIN APP
+        function App() {
+            return (
+                <>
+                    <Navbar />
+                    <Hero />
+                    <TrustBar />
+                    <ProblemSection />
+                    <SolutionSection />
+                    <HowItWorks />
+                    <DemoSection />
+                    <ROICalculator />
+                    <Benefits />
+                    <Comparison />
+                    <Pricing />
+                    <SignupForm />
+                    <DownloadSection />
+                    <CTASection />
+                    <Footer />
+                    <WhatsAppButton />
+                </>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
+</body>
+</html>

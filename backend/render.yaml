@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: rxmax-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node src/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: WHATSAPP_PROVIDER
+        value: gupshup
+      - key: WHATSAPP_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rxmax-db
+          property: connectionString
+
+databases:
+  - name: rxmax-db
+    plan: free
+    databaseName: rxmax
+    user: rxmax

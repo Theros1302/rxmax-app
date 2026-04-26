@@ -1,0 +1,4 @@
+/app    https://app.rxmax.online    302
+/store  https://store.rxmax.online  302
+/admin  https://admin.rxmax.online  302
+/api/*  https://api.rxmax.online/api/:splat  200
