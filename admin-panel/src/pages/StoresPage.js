@@ -49,13 +49,17 @@ function StoresPage() {
         setShowAddModal(false);
         setNewStore({ name: '', owner_name: '', phone: '', email: '', password: '', address: '', city: '', state: '', pincode: '', license_number: '', gst_number: '' });
 
-        // Show success with store details
+        // Show success modal with credentials and onboarding links.
+        const s = result.store || result;
         setCreatedStore({
-          id: result.id || result.store_id || 'N/A',
-          name: result.name || newStore.name,
-          slug: result.slug || '',
-          patientLink: 'https://rxmax-patient-app.vercel.app/store/' + ((result.slug ? result.slug : result.id) || ''),
-          storeLink: 'https://rxmax-store-dashboard.vercel.app',
+          id: s.id || result.store_id || 'N/A',
+          name: s.name || newStore.name,
+          slug: s.slug || '',
+          phone: s.phone || newStore.phone,
+          temporaryPassword: result.temporary_password || newStore.password || '',
+          passwordWasGenerated: !!result.temporary_password_generated,
+          patientLink: result.patient_onboarding_link || ('https://rxmax-patient-app.vercel.app/store/' + (s.slug || s.id || '')),
+          storeLink: result.store_login_link || 'https://rxmax-store-dashboard.vercel.app',
         });
 
         // Reload stores
@@ -139,6 +143,45 @@ function StoresPage() {
         />
       </div>
 
+      {/* Created Store success modal */}
+      {createdStore && (
+        <div className="modal-overlay" onClick={() => setCreatedStore(null)}>
+          <div className="modal-content modal-lg" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Store created — share these with the owner</h2>
+              <button className="modal-close" onClick={() => setCreatedStore(null)}><X size={20} /></button>
+            </div>
+            <div style={{ padding: 20 }}>
+              <div className="alert" style={{ background: '#ecfdf5', border: '1px solid #10b981', color: '#065f46', padding: 12, borderRadius: 6, marginBottom: 20 }}>
+                <strong>{createdStore.name}</strong> is now active.
+              </div>
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 4 }}>Store Login</div>
+                <div style={{ background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 6, padding: 12, fontFamily: 'monospace', fontSize: 14 }}>
+                  <div>URL: <a href={createdStore.storeLink} target="_blank" rel="noopener noreferrer">{createdStore.storeLink}</a></div>
+                  <div>Phone: <strong>{createdStore.phone}</strong></div>
+                  <div>Password: <strong>{createdStore.temporaryPassword}</strong>{createdStore.passwordWasGenerated && <span style={{ color: '#dc2626', marginLeft: 8 }}>(auto-generated, share once)</span>}</div>
+                </div>
+                <button className="btn btn-secondary" style={{ marginTop: 8 }} onClick={() => navigator.clipboard.writeText('Store Login\nURL: ' + createdStore.storeLink + '\nPhone: ' + createdStore.phone + '\nPassword: ' + createdStore.temporaryPassword)}>Copy login details</button>
+              </div>
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 4 }}>Patient onboarding link</div>
+                <div style={{ background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 6, padding: 12, fontFamily: 'monospace', fontSize: 13, wordBreak: 'break-all' }}>
+                  <a href={createdStore.patientLink} target="_blank" rel="noopener noreferrer">{createdStore.patientLink}</a>
+                </div>
+                <button className="btn btn-secondary" style={{ marginTop: 8 }} onClick={() => navigator.clipboard.writeText(createdStore.patientLink)}>Copy patient link</button>
+              </div>
+              <div style={{ background: '#fef3c7', border: '1px solid #f59e0b', color: '#78350f', padding: 12, borderRadius: 6, fontSize: 13 }}>
+                <strong>Important:</strong> The password is shown only once. Save it before closing this dialog.
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-primary" onClick={() => setCreatedStore(null)}>Done</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Add Store Modal */}
       {showAddModal && (
         <div className="modal-overlay" onClick={() => setShowAddModal(false)}>
@@ -169,8 +212,8 @@ function StoresPage() {
                   <input type="email" value={newStore.email} onChange={e => handleInputChange('email', e.target.value)} placeholder="store@example.com" />
                 </div>
                 <div className="form-group">
-                  <label>Password *</label>
-                  <input type="password" required minLength={8} value={newStore.password} onChange={e => handleInputChange('password', e.target.value)} placeholder="Min 8 characters" />
+                  <label>Password (leave blank to auto-generate)</label>
+                  <input type="password" minLength={8} value={newStore.password} onChange={e => handleInputChange('password', e.target.value)} placeholder="Auto-generated if blank" />
                 </div>
                 <div className="form-group">
                   <label>Address *</label>

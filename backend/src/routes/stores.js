@@ -11,12 +11,14 @@ router.get('/:slug', async (req, res) => {
   try {
     const { slug } = req.params;
 
+    // Accept either UUID (admin links) or slug (clean URLs)
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
     const store = await getOne(
       `SELECT id, name, slug, owner_name, phone, email, logo_url, tagline,
               address, city, state, pincode, latitude, longitude,
               delivery_radius_km, delivery_charge, min_order_amount,
               is_delivery_enabled, is_pickup_enabled, operating_hours
-       FROM stores WHERE slug = $1 AND is_active = true`,
+       FROM stores WHERE ${isUuid ? 'id' : 'slug'} = $1 AND is_active = true`,
       [slug],
     );
 

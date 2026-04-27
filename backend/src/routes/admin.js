@@ -234,11 +234,22 @@ router.post('/stores', authenticateToken, requireAdmin, async (req, res) => {
     const gst_number = body.gst_number || null;
 
     // Validation
-    if (!name || !owner_name || !phone || !password || !address || !city || !state || !pincode) {
-      return res.status(400).json({ error: 'Missing required fields: name, owner_name, phone, password, address, city, state, pincode' });
+    // Password is optional. Auto-generate a friendly one if admin didn't provide.
+    let temporaryPasswordGenerated = false;
+    let effectivePassword = password;
+    if (!effectivePassword) {
+      const syllables = ['rxmax', 'pharma', 'apollo', 'clinic', 'medic', 'health', 'care', 'plus'];
+      const word = syllables[Math.floor(Math.random() * syllables.length)];
+      const digits = Math.floor(1000 + Math.random() * 9000);
+      effectivePassword = `${word}${digits}!`;
+      temporaryPasswordGenerated = true;
     }
 
-    if (password.length < 8) {
+    if (!name || !owner_name || !phone || !address || !city || !state || !pincode) {
+      return res.status(400).json({ error: 'Missing required fields: name, owner_name, phone, address, city, state, pincode' });
+    }
+
+    if (effectivePassword.length < 8) {
       return res.status(400).json({ error: 'Password must be at least 8 characters' });
     }
 
@@ -255,7 +266,7 @@ router.post('/stores', authenticateToken, requireAdmin, async (req, res) => {
       .replace(/[^\w-]/g, '') + `-${uuidv4().slice(0, 4)}`;
 
     // Hash password
-    const passwordHash = await bcrypt.hash(password, 10);
+    const passwordHash = await bcrypt.hash(effectivePassword, 10);
 
     // Create store
     const store = await insert('stores', {
@@ -286,6 +297,11 @@ router.post('/stores', authenticateToken, requireAdmin, async (req, res) => {
         email: store.email,
         city: store.city,
       },
+      // Returned ONCE on creation. Admin must share these with the store owner.
+      temporary_password: effectivePassword,
+      temporary_password_generated: temporaryPasswordGenerated,
+      patient_onboarding_link: `https://rxmax-patient-app.vercel.app/store/${store.slug}`,
+      store_login_link: 'https://rxmax-store-dashboard.vercel.app',
     });
   } catch (error) {
     console.error('Admin create store error:', error);

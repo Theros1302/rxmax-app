@@ -13,6 +13,7 @@ import OrderDetailPage from './pages/OrderDetailPage';
 import RefillsPage from './pages/RefillsPage';
 import ProfilePage from './pages/ProfilePage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import RegisterPage from './pages/RegisterPage';
 
 // Components
 import BottomNav from './components/BottomNav';
@@ -79,11 +80,18 @@ function App() {
     setIsAuthenticated(true);
   };
 
+  const handleProfileCompleted = (updatedPatient) => {
+    setPatient(updatedPatient);
+  };
+
   const handleLogout = () => {
     api.logout();
     setIsAuthenticated(false);
     setPatient(null);
   };
+
+  // A patient who logged in but has not yet provided their name/address.
+  const needsRegistration = isAuthenticated && patient && !(patient.name && patient.name.trim());
 
   if (loading) {
     return (
@@ -108,6 +116,8 @@ function App() {
               </p>
             </div>
           </div>
+        ) : needsRegistration ? (
+          <RegisterPage store={store} patient={patient} onComplete={handleProfileCompleted} />
         ) : isAuthenticated ? (
           <>
             <Routes>
