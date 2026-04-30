@@ -315,7 +315,7 @@ router.post('/stores', authenticateToken, requireAdmin, async (req, res) => {
 // ====================================
 router.get('/patients', authenticateToken, requireAdmin, async (req, res) => {
   try {
-    const { city, risk_level, limit = 50, offset = 0 } = req.query;
+    const { city, risk_level, store_id, limit = 50, offset = 0 } = req.query;
 
     let sql = `
       SELECT
@@ -353,6 +353,12 @@ router.get('/patients', authenticateToken, requireAdmin, async (req, res) => {
       params.push(risk_level);
     }
 
+    if (store_id) {
+      paramCount++;
+      sql += ` AND sp.store_id = $${paramCount}`;
+      params.push(store_id);
+    }
+
     sql += ` GROUP BY p.id, sp.id ORDER BY p.created_at DESC LIMIT $${paramCount + 1} OFFSET $${paramCount + 2}`;
     params.push(parseInt(limit), parseInt(offset));
 
@@ -375,7 +381,7 @@ router.get('/patients', authenticateToken, requireAdmin, async (req, res) => {
 // ====================================
 router.get('/orders', authenticateToken, requireAdmin, async (req, res) => {
   try {
-    const { status, city, startDate, endDate, limit = 50, offset = 0 } = req.query;
+    const { status, city, startDate, endDate, store_id, limit = 50, offset = 0 } = req.query;
 
     let sql = `
       SELECT
@@ -410,6 +416,12 @@ router.get('/orders', authenticateToken, requireAdmin, async (req, res) => {
       paramCount++;
       sql += ` AND s.city = $${paramCount}`;
       params.push(city);
+    }
+
+    if (store_id) {
+      paramCount++;
+      sql += ` AND o.store_id = $${paramCount}`;
+      params.push(store_id);
     }
 
     if (startDate) {

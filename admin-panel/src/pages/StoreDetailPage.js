@@ -14,6 +14,7 @@ import StatCard from '../components/StatCard';
 import DataTable from '../components/DataTable';
 import StatusBadge from '../components/StatusBadge';
 import { api } from '../services/api';
+import { notify } from '../components/Toast';
 import {
   LineChart,
   Line,
@@ -35,25 +36,34 @@ function StoreDetailPage() {
 
   useEffect(() => {
     const loadData = async () => {
-      const storeData = await api.getStore(id);
-      const patientsData = await api.getStorePatients(id);
-      const ordersData = await api.getStoreOrders(id);
-      const revenueData = await api.getStoreRevenue30Days(id);
-
-      setStore(storeData);
-      setPatients(patientsData);
-      setOrders(ordersData);
-      setRevenueData(revenueData);
+      try {
+        setStore(await api.getStore(id));
+      } catch (err) { notify.error(`Couldn't load store: ${err.message || err}`); }
+      try { setPatients(await api.getStorePatients(id)); }
+      catch (err) { notify.error(`Couldn't load patients: ${err.message || err}`); setPatients([]); }
+      try { setOrders(await api.getStoreOrders(id)); }
+      catch (err) { notify.error(`Couldn't load orders: ${err.message || err}`); setOrders([]); }
+      try { setRevenueData(await api.getStoreRevenue30Days(id)); }
+      catch (_) { setRevenueData([]); }
       setLoading(false);
     };
     loadData();
   }, [id]);
 
-  if (loading || !store) {
-    return <div className="app-header"><h1>Loading...</h1></div>;
+  if (loading) {
+    return <div className="app-header"><h1>Loading store…</h1></div>;
+  }
+  if (!store) {
+    return (
+      <div className="app-header" style={{ padding: 40 }}>
+        <h1>Store not found</h1>
+        <p style={{ color: '#6b7280', marginTop: 8 }}>This store either doesn't exist or you don't have access.</p>
+        <button className="btn btn-secondary" style={{ marginTop: 16 }} onClick={() => navigate('/stores')}>← Back to all stores</button>
+      </div>
+    );
   }
 
-  const avgOrderValue = store.orders > 0 ? (store.revenue * 100000 / store.orders).toFixed(0) : 0;
+  const avgOrderValue = (store.orders > 0 && store.revenue) ? (store.revenue * 100000 / store.orders).toFixed(0) : 0;
 
   const patientColumns = [
     { key: 'name', label: 'Patient Name' },

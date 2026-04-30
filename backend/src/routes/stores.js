@@ -189,6 +189,85 @@ router.get('/patients', authenticateToken, requireRole(['store']), async (req, r
   }
 });
 
+// Add a new patient to this store (creates patient row if phone is new + links via store_patients)
+router.post('/patients', authenticateToken, requireRole(['store']), async (req, res) => {
+  try {
+    const storeId = req.user.id;
+    const {
+      phone,
+      name,
+      email,
+      date_of_birth,
+      gender,
+      blood_group,
+      address,
+      city,
+      pincode,
+      allergies,
+      conditions,
+      tags,
+      notes,
+    } = req.body;
+
+    if (!phone || !/^\d{10}$/.test(String(phone).replace(/^\+91/, ''))) {
+      return res.status(400).json({ error: 'Valid 10-digit phone is required' });
+    }
+    if (!name || !name.trim()) {
+      return res.status(400).json({ error: 'Patient name is required' });
+    }
+
+    const cleanPhone = String(phone).replace(/^\+91/, '');
+
+    // Find or create the patient by phone
+    let patient = await getOne('SELECT id, name FROM patients WHERE phone = $1', [cleanPhone]);
+    if (!patient) {
+      patient = await insert('patients', {
+        id: require('uuid').v4(),
+        phone: cleanPhone,
+        name: name.trim(),
+        email: email || null,
+        date_of_birth: date_of_birth || null,
+        gender: gender || null,
+        blood_group: blood_group || null,
+        address: address || null,
+        city: city || null,
+        pincode: pincode || null,
+        allergies: Array.isArray(allergies) ? allergies : null,
+        conditions: Array.isArray(conditions) ? conditions : null,
+        is_active: true,
+      });
+    }
+
+    // Check if already linked to this store
+    const existingLink = await getOne(
+      'SELECT id FROM store_patients WHERE store_id = $1 AND patient_id = $2',
+      [storeId, patient.id],
+    );
+    if (existingLink) {
+      return res.status(409).json({ error: 'Patient already linked to this store' });
+    }
+
+    // Create the link
+    const link = await insert('store_patients', {
+      id: require('uuid').v4(),
+      store_id: storeId,
+      patient_id: patient.id,
+      tags: Array.isArray(tags) ? tags : null,
+      notes: notes || null,
+      is_active: true,
+    });
+
+    res.status(201).json({
+      message: 'Patient added',
+      patient: { id: patient.id, name: name.trim(), phone: cleanPhone },
+      store_patient_id: link.id,
+    });
+  } catch (error) {
+    console.error('Add patient error:', error);
+    res.status(500).json({ error: 'Failed to add patient' });
+  }
+});
+
 // Single patient detail with order history
 router.get('/patients/:patientId', authenticateToken, requireRole(['store']), async (req, res) => {
   try {

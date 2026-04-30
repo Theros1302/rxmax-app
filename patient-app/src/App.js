@@ -51,7 +51,7 @@ function App() {
           slug = pathMatch[1];
           localStorage.setItem('storeSlug', slug);
         } else {
-          slug = localStorage.getItem('storeSlug') || 'apollo';
+          slug = localStorage.getItem('storeSlug') || '';
         }
 
         const storeData = await api.getStoreBySlug(slug);
@@ -110,9 +110,12 @@ function App() {
         {!store ? (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '1rem' }}>
             <div style={{ textAlign: 'center' }}>
-              <h2>Store Not Found</h2>
+              <h2>Welcome to RxMax</h2>
               <p style={{ marginTop: '1rem', color: 'var(--text-secondary)' }}>
-                Please use your pharmacy's unique link to access this app.
+                Please open this app from your pharmacy's onboarding link.
+              </p>
+              <p style={{ marginTop: '0.5rem', color: 'var(--text-secondary)', fontSize: 13 }}>
+                Your pharmacy will share a link like <code>https://rxmax-patient-app.vercel.app/store/your-pharmacy</code>
               </p>
             </div>
           </div>

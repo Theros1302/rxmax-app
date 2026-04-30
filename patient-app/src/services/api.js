@@ -157,7 +157,24 @@ class ApiService {
   // ---------- Refills ----------
   async getUpcomingRefills() {
     const res = await this.apiCall('GET', '/refills/patient');
-    return Array.isArray(res) ? res : (res?.refills || []);
+    const list = Array.isArray(res) ? res : (res?.refills || []);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return list.map((r) => {
+      const due = r.refill_due_date ? new Date(r.refill_due_date) : null;
+      const daysRemaining = due
+        ? Math.round((due - today) / (1000 * 60 * 60 * 24))
+        : null;
+      return {
+        ...r,
+        medicineName: r.medicine_name || r.medicineName,
+        dueDate: r.refill_due_date || r.dueDate,
+        dosage: r.dosage,
+        frequency: r.frequency,
+        instruction: r.instructions || r.instruction,
+        daysRemaining,
+      };
+    });
   }
 
   async respondToRefill(refillId, action) {

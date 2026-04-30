@@ -166,20 +166,34 @@ export const api = {
 
   updateStore: async (id, updateData) => apiCall('PUT', `/admin/stores/${id}`, updateData),
 
-  // Per-store admin views — these use real backend endpoints (no parseInt of UUIDs!)
+  // Per-store admin views — query the platform-wide endpoints with a store_id filter.
   getStorePatients: async (storeId) => {
-    const r = await apiCall('GET', `/admin/stores/${storeId}/patients`);
+    const r = await apiCall('GET', `/admin/patients?store_id=${storeId}&limit=200`);
     return (r.patients || []).map(mapPatient);
   },
 
   getStoreOrders: async (storeId) => {
-    const r = await apiCall('GET', `/admin/stores/${storeId}/orders`);
+    const r = await apiCall('GET', `/admin/orders?store_id=${storeId}&limit=200`);
     return (r.orders || []).map(mapOrder);
   },
 
   getStoreRevenue30Days: async (storeId) => {
-    const r = await apiCall('GET', `/admin/stores/${storeId}/revenue?days=30`);
-    return r.revenue || r || [];
+    // Build last-30-days revenue from the same orders endpoint (cheap aggregation client-side).
+    try {
+      const r = await apiCall('GET', `/admin/orders?store_id=${storeId}&limit=500`);
+      const orders = (r.orders || []);
+      const byDate = {};
+      const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 30); cutoff.setHours(0,0,0,0);
+      for (const o of orders) {
+        const d = new Date(o.created_at);
+        if (d < cutoff) continue;
+        const key = d.toISOString().slice(0, 10);
+        byDate[key] = (byDate[key] || 0) + parseFloat(o.total_amount || 0);
+      }
+      return Object.keys(byDate).sort().map(date => ({ date, revenue: byDate[date] / 100000 }));
+    } catch (e) {
+      return [];
+    }
   },
 
   // ---------- Patients ----------
