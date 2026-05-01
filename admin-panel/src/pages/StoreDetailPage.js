@@ -71,12 +71,12 @@ function StoreDetailPage() {
     {
       key: 'orders',
       label: 'Orders',
-      render: (value) => <span>{value}</span>,
+      render: (value) => <span>{value ?? 0}</span>,
     },
     {
       key: 'lifetime',
       label: 'Lifetime Value (₹)',
-      render: (value) => <span>{value.toLocaleString('en-IN')}</span>,
+      render: (value) => <span>{(value ?? 0).toLocaleString('en-IN')}</span>,
     },
   ];
 
@@ -86,15 +86,15 @@ function StoreDetailPage() {
     {
       key: 'amount',
       label: 'Amount (₹)',
-      render: (value) => <span>{value}</span>,
+      render: (value) => <span>{value ?? 0}</span>,
     },
     {
       key: 'status',
       label: 'Status',
       render: (value) => (
         <StatusBadge
-          type={value.toLowerCase()}
-          text={value}
+          type={(value || 'unknown').toLowerCase()}
+          text={value || 'Unknown'}
         />
       ),
     },
@@ -144,7 +144,7 @@ function StoreDetailPage() {
             <div className="profile-field">
               <label className="profile-label">Plan</label>
               <div style={{ marginTop: '6px' }}>
-                <span className={`plan-badge plan-${store.plan.toLowerCase()}`}>
+                <span className={`plan-badge plan-${(store.plan || 'free').toLowerCase()}`}>
                   {store.plan}
                 </span>
               </div>
@@ -163,7 +163,7 @@ function StoreDetailPage() {
             <div className="profile-field">
               <label className="profile-label">Status</label>
               <div style={{ marginTop: '6px' }}>
-                <StatusBadge type={store.status.toLowerCase()} text={store.status} />
+                <StatusBadge type={(store.status || 'unknown').toLowerCase()} text={store.status || 'Unknown'} />
               </div>
             </div>
             <div className="profile-field">
