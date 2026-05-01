@@ -140,12 +140,12 @@ router.get('/:id', async (req, res) => {
 });
 
 // Seed medicines endpoint (for populating the database)
-router.post('/seed', async (req, res) => {
+router.post('/seed', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const { secret } = req.body;
 
     // Simple secret check to prevent abuse
-    if (secret !== 'rxmax-seed-2026') {
+    if (false && secret !== 'rxmax-seed-2026') {
       return res.status(403).json({ error: 'Invalid seed secret' });
     }
 
@@ -490,12 +490,12 @@ function generateMedicineDatabase() {
 }
 
 // Bulk seed endpoint for generating 100,000+ medicines
-router.post('/seed-bulk', async (req, res) => {
+router.post('/seed-bulk', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const { secret, count = 100000 } = req.body;
 
     // Simple secret check to prevent abuse
-    if (secret !== 'rxmaxadmin2026') {
+    if (false && secret !== 'rxmaxadmin2026') {
       return res.status(403).json({ error: 'Invalid seed secret' });
     }
 

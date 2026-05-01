@@ -46,7 +46,7 @@ router.post('/store/register', async (req, res) => {
       .replace(/[^\w-]/g, '') + `-${uuidv4().slice(0, 4)}`;
 
     // Hash password
-    const passwordHash = await bcrypt.hash(password, 10);
+    const passwordHash = await bcrypt.hash(password, 12);
 
     // Create store
     const store = await insert('stores', {
@@ -149,8 +149,13 @@ router.post('/patient/send-otp', async (req, res) => {
       expires_at: expiresAt,
     });
 
-    // In production, send actual SMS via Twilio, AWS SNS, etc.
-    console.log(`OTP for ${phone}: ${otp}`);
+    // In production this would dispatch SMS via a provider (Twilio, MSG91, Gupshup).
+    // Never log OTPs in production - they're as sensitive as passwords.
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(`[DEV] OTP for ${phone}: ${otp}`);
+    } else {
+      console.log(`[OTP] Generated OTP for ${phone.slice(0, 3)}*****${phone.slice(-2)}`);
+    }
 
     res.json({
       message: 'OTP sent successfully',
@@ -172,8 +177,8 @@ router.post('/patient/verify-otp', async (req, res) => {
       return res.status(400).json({ error: 'Phone and OTP required' });
     }
 
-    // Demo mode: accept "123456" as universal OTP
-    const isDemoOtp = otp === '123456';
+    // Demo OTP only allowed in non-production. NEVER in prod.
+    const isDemoOtp = process.env.NODE_ENV !== 'production' && otp === '123456';
 
     if (!isDemoOtp) {
       // Verify OTP from database

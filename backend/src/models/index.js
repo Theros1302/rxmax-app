@@ -5,7 +5,7 @@ const query = async (text, params = []) => {
     const result = await pool.query(text, params);
     return result;
   } catch (error) {
-    console.error('Database query error:', error);
+    console.error('Database query error:', error.message);
     throw error;
   }
 };
@@ -54,6 +54,32 @@ const remove = async (table, where) => {
   return getOne(text, values);
 };
 
+/**
+ * Run a series of queries inside a single transaction.
+ * Auto-rollback on any throw, auto-release client on completion.
+ *
+ * Usage:
+ *   const result = await withTransaction(async (client) => {
+ *     await client.query('INSERT INTO ...');
+ *     await client.query('UPDATE ...');
+ *     return finalValue;
+ *   });
+ */
+const withTransaction = async (fn) => {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const result = await fn(client);
+    await client.query('COMMIT');
+    return result;
+  } catch (err) {
+    try { await client.query('ROLLBACK'); } catch (_) { /* swallow rollback errors */ }
+    throw err;
+  } finally {
+    client.release();
+  }
+};
+
 module.exports = {
   query,
   getOne,
@@ -61,4 +87,6 @@ module.exports = {
   insert,
   update,
   remove,
+  withTransaction,
+  pool,
 };

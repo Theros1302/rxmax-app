@@ -23,6 +23,7 @@ const RegisterPage = ({ store, patient, onComplete }) => {
     conditions: '',
   });
   const [saving, setSaving] = useState(false);
+  const [consent, setConsent] = useState(false);
   const [error, setError] = useState('');
 
   const set = (field) => (e) => {
@@ -41,6 +42,7 @@ const RegisterPage = ({ store, patient, onComplete }) => {
     if (form.pincode && !/^\d{6}$/.test(form.pincode)) {
       return setError('Pincode must be 6 digits');
     }
+    if (!consent) return setError('Please confirm consent to continue');
 
     setSaving(true);
     try {
@@ -142,6 +144,14 @@ const RegisterPage = ({ store, patient, onComplete }) => {
           <input type="text" value={form.conditions} onChange={set('conditions')}
             placeholder="e.g. Diabetes, Hypertension" />
         </Field>
+
+        <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 12, color: '#374151', padding: '12px', background: '#f9fafb', borderRadius: 6, cursor: 'pointer' }}>
+          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)}
+            style={{ marginTop: 2, flexShrink: 0 }} />
+          <span>
+            I agree to share my personal and health information with {store?.name || 'this pharmacy'} for the purpose of medicine fulfilment and refill reminders. I understand my data is processed under India's Digital Personal Data Protection Act, 2023, and I can request its deletion at any time by contacting the pharmacy.
+          </span>
+        </label>
 
         <button type="submit" disabled={saving}
           style={{

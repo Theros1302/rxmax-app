@@ -5,7 +5,7 @@
 const RAW_BASE = (process.env.REACT_APP_API_URL || 'https://rxmax-backend.onrender.com').replace(/\/+$/, '');
 const API_BASE_URL = RAW_BASE;
 
-const TOKEN_KEY = 'medibuddy_token';   // kept for existing sessions
+const TOKEN_KEY = 'rxmax_store_token';
 const STORE_KEY = 'rxmax_store_id';
 
 // ========== HELPER ==========

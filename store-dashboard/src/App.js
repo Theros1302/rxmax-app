@@ -17,7 +17,7 @@ import { ToastHost } from './components/Toast';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem('rxmax_token') !== null;
+    return localStorage.getItem('rxmax_store_token') !== null;
   });
 
   const handleLogin = () => {
@@ -26,7 +26,7 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem('rxmax_token');
+    localStorage.removeItem('rxmax_store_token');
     localStorage.removeItem('rxmax_store_id');
   };
 
